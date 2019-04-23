@@ -1,0 +1,5 @@
+lang=go
+genJson=1
+genOrmType=
+prefix=cos_
+postfix=_auto_create

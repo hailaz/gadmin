@@ -1,0 +1,3 @@
+docfile/tools/codeCreater/xorm/model/*
+docfile/tools/codeCreater/xorm/create_struct.bat
+docfile/tools/codeCreater/xorm/create_extend.bat
