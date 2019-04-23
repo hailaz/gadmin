@@ -11,6 +11,7 @@ func init() {
 func main() {
 
 	// u := new(model.User)
+
 	// user, _ := u.GetById(3)
 
 	// glog.Println(user)
