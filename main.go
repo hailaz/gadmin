@@ -4,6 +4,7 @@ import (
 	"github.com/gogf/gf/g"
 	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/logger"
+	"github.com/hailaz/gadmin/library/timer"
 	"github.com/hailaz/gadmin/router"
 )
 
@@ -14,6 +15,8 @@ func init() {
 	model.InitModel()
 	// 初始化日志
 	logger.InitLogger()
+
+	timer.InitTimer()
 
 }
 

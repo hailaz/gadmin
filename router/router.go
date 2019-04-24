@@ -7,10 +7,20 @@ import (
 )
 
 func InitRouter(s *ghttp.Server) {
+
+	loginCtrl := new(api.LoginController)
+	s.BindControllerMethod("GET:/loginkey", loginCtrl, "GetLoginCryptoKey")
+	s.BindControllerMethod("POST:/login", loginCtrl, "Login")
+	v1 := s.Group("/v1")
 	userCtrl := new(api.UserController)
-	s.Group("/v1").Bind([]ghttp.GroupItem{
-		{"ALL", "*", api.NewAuthorizer(model.Enforcer), ghttp.HOOK_BEFORE_SERVE}, //权限验证
+	//权限验证
+	v1.ALL("*", api.NewAuthorizer(model.Enforcer), ghttp.HOOK_BEFORE_SERVE)
+	v1.Bind([]ghttp.GroupItem{
 		{"GET", "/show", userCtrl, "Show"},
+	})
+
+	v1.Bind([]ghttp.GroupItem{
+		{"GET", "/login", userCtrl, "Login"},
 	})
 
 }
