@@ -1,0 +1,1 @@
+xorm reverse mysql root:root123@tcp(localhost:33061)/gadmin?charset=utf8 .\templates\extend  .\model

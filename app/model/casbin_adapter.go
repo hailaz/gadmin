@@ -20,6 +20,10 @@ type CasbinRule struct {
 	V5    string `json:"v5"`     //
 }
 
+const (
+	CASBINRULE_TABLE_NAME = "casbin_rule"
+)
+
 // Adapter represents the Xorm adapter for policy storage.
 type Adapter struct {
 	o gdb.DB
@@ -82,7 +86,7 @@ func loadPolicyLine(line CasbinRule, model model.Model) {
 // LoadPolicy loads policy from database.
 func (a *Adapter) LoadPolicy(model model.Model) error {
 	var lines []CasbinRule
-	err := a.o.Table("casbin_rule").Structs(&lines)
+	err := a.o.Table(CASBINRULE_TABLE_NAME).Structs(&lines)
 
 	if err != nil {
 		return err
@@ -140,21 +144,20 @@ func (a *Adapter) SavePolicy(model model.Model) error {
 		}
 	}
 
-	//_, err := a.o.InsertMulti(len(lines), lines)
-	_, err := a.o.BatchInsert("casbin_rule", lines)
+	_, err := a.o.BatchInsert(CASBINRULE_TABLE_NAME, lines)
 	return err
 }
 
 // AddPolicy adds a policy rule to the storage.
 func (a *Adapter) AddPolicy(sec string, ptype string, rule []string) error {
 	line := savePolicyLine(ptype, rule)
-	_, err := a.o.Insert("casbin_rule", &line)
+	_, err := a.o.Insert(CASBINRULE_TABLE_NAME, &line)
 	return err
 }
 
 // RemovePolicy removes a policy rule from the storage.
 func (a *Adapter) RemovePolicy(sec string, ptype string, rule []string) error {
-	qs := a.o.Table("casbin_rule").Safe()
+	qs := a.o.Table(CASBINRULE_TABLE_NAME).Safe()
 	qs = qs.Where("p_type", ptype)
 	for index := 0; index < len(rule); index++ {
 		qs = qs.And(fmt.Sprintf("v%d", index), rule[index])
@@ -166,7 +169,7 @@ func (a *Adapter) RemovePolicy(sec string, ptype string, rule []string) error {
 
 // RemoveFilteredPolicy removes policy rules that match the filter from the storage.
 func (a *Adapter) RemoveFilteredPolicy(sec string, ptype string, fieldIndex int, fieldValues ...string) error {
-	qs := a.o.Table("casbin_rule").Safe()
+	qs := a.o.Table(CASBINRULE_TABLE_NAME).Safe()
 	qs = qs.Where("p_type", ptype)
 	for index := 0; index <= 5; index++ {
 		if fieldIndex <= index && index < fieldIndex+len(fieldValues) {

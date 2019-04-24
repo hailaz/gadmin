@@ -12,12 +12,13 @@ var defDB gdb.DB
 var Enforcer *casbin.Enforcer
 
 const (
-	ACTION_ALL = "(GET)|(POST)|(PUT)|(DELETE)|(PATCH)|(OPTIONS)|(HEAD)"
+	ACTION_ALL             = "(GET)|(POST)|(PUT)|(DELETE)|(PATCH)|(OPTIONS)|(HEAD)"
+	ADMIN_NAME             = "admin" //超级管理员用户名
+	ADMIN_NICK_NAME        = "超级管理员" //超级管理员显示名称
+	ADMIN_DEFAULT_PASSWORD = "123"   //超级管理员默认密码
 )
 
-func init() {
-	// 设置默认配置文件，默认的 config.toml 将会被覆盖
-	g.Config().SetFileName("database.conf")
+func InitModel() {
 	defDB = g.DB()
 	initUser()
 	initCasbin()
@@ -28,18 +29,14 @@ func init() {
 // creatTime:2019年04月23日 14:57:23
 // author:hailaz
 func initUser() {
-	u := User{}
-	err := defDB.Table("user").Where("user_name", "admin").Struct(&u)
-	if err != nil {
-		return
-	}
-	if u.Id != 0 {
+	u, err := GetUserByName()
+	if err != nil || u.Id != 0 {
 		return
 	}
 	admin := User{
-		UserName: "admin",
-		NickName: "超级管理员",
-		Password: "123",
+		UserName: ADMIN_NAME,
+		NickName: ADMIN_NICK_NAME,
+		Password: ADMIN_DEFAULT_PASSWORD,
 	}
 	admin.Insert()
 }
@@ -54,7 +51,7 @@ func initCasbin() {
 	Enforcer.LoadPolicy()
 	//Enforcer.DeletePermissionsForUser("group_admin")
 	Enforcer.AddPolicy("group_admin", "*", ACTION_ALL)
-	Enforcer.AddGroupingPolicy("admin", "group_admin")
+	Enforcer.AddGroupingPolicy(ADMIN_NAME, "group_admin")
 
 }
 

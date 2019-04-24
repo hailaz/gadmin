@@ -1,7 +1,8 @@
 docfile/tools/codeCreater/xorm/model/*
-docfile/tools/codeCreater/xorm/create_struct.bat
-docfile/tools/codeCreater/xorm/create_extend.bat
 
 #编译的可执行文件
 *.exe
 *.exe~
+
+#日志文件
+*.log

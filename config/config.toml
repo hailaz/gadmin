@@ -1,3 +1,16 @@
+
+port = 8080
+
+#日志目录，默认log目录
+logpath = "log"
+
+
+
+
+
+
+
+#数据库
 [database]
     [[database.default]]
         host     = "localhost"
