@@ -33,6 +33,7 @@ func (t *User) TableName() string {
 func (t *User) Insert() (int64, error) {
 	t.AddTime = gtime.Now().String()
 	t.UpdateTime = gtime.Now().String()
+	t.Password = EncryptPassword(t.Password)
 	r, err := defDB.Insert("user", t)
 	if err != nil {
 		return 0, err

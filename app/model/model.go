@@ -29,7 +29,7 @@ func InitModel() {
 // creatTime:2019年04月23日 14:57:23
 // author:hailaz
 func initUser() {
-	u, err := GetUserByName()
+	u, err := GetUserByName(ADMIN_NAME)
 	if err != nil || u.Id != 0 {
 		return
 	}
