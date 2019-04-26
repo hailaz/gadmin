@@ -25,7 +25,7 @@ func InitRouter(s *ghttp.Server) {
 
 // InitV1 初始化V1
 //
-// creatTime:2019年04月25日 09:24:06
+// createTime:2019年04月25日 09:24:06
 // author:hailaz
 func InitV1(s *ghttp.Server) {
 	v1 := s.Group("/v1")

@@ -3,12 +3,12 @@ package model
 import "github.com/gogf/gf/g/crypto/gmd5"
 
 const (
-	ENCRYPTMD5 = "gframe"
+	ENCRYPTMD5 = "gadmin"
 )
 
 // GetUserByName description
 //
-// creatTime:2019年04月23日 17:14:22
+// createTime:2019年04月23日 17:14:22
 // author:hailaz
 func GetUserByName(name string) (*User, error) {
 	u := User{}
@@ -19,9 +19,9 @@ func GetUserByName(name string) (*User, error) {
 	return &u, nil
 }
 
-// EncryptPassword description
+// EncryptPassword 加密密码
 //
-// creatTime:2019年04月25日 10:19:13
+// createTime:2019年04月25日 10:19:13
 // author:hailaz
 func EncryptPassword(data string) string {
 	return gmd5.EncryptString(data + ENCRYPTMD5)

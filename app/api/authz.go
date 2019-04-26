@@ -5,6 +5,7 @@ import (
 
 	"github.com/casbin/casbin"
 	"github.com/gogf/gf/g/net/ghttp"
+	"github.com/hailaz/gadmin/library/common"
 )
 
 // NewAuthorizer returns the authorizer.
@@ -28,7 +29,7 @@ type BasicAuthorizer struct {
 // Currently, only HTTP basic authentication is supported
 func (a *BasicAuthorizer) GetUserName(r *http.Request) string {
 	token := r.Header.Get("token")
-	jwtobj := pareseJWT(token)
+	jwtobj := common.PareseJWT(token)
 	if jwtobj != nil {
 		return jwtobj.Username
 	}

@@ -26,7 +26,7 @@ func InitModel() {
 
 // initUser description
 //
-// creatTime:2019年04月23日 14:57:23
+// createTime:2019年04月23日 14:57:23
 // author:hailaz
 func initUser() {
 	u, err := GetUserByName(ADMIN_NAME)
@@ -43,7 +43,7 @@ func initUser() {
 
 // initCasbin description
 //
-// creatTime:2019年04月23日 14:45:20
+// createTime:2019年04月23日 14:45:20
 // author:hailaz
 func initCasbin() {
 	a := NewAdapter(defDB)
@@ -57,7 +57,7 @@ func initCasbin() {
 
 // GetDB description
 //
-// creatTime:2019年04月23日 11:53:21
+// createTime:2019年04月23日 11:53:21
 // author:hailaz
 func GetDB() gdb.DB {
 	return defDB
