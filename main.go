@@ -40,8 +40,9 @@ func main() {
 	// err := model.GetDB().Table("user").Structs(&users)
 	// glog.Println(err, users)
 	s := g.Server()
-	s.SetIndexFolder(true)
-	s.SetServerRoot("static")
+	s.SetIndexFolder(false)
+	s.SetIndexFiles([]string{"index.html"})
+	s.SetServerRoot(".")
 	// 初始化路由
 	router.InitRouter(s)
 

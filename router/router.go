@@ -13,12 +13,11 @@ func cors(r *ghttp.Request) {
 }
 
 func InitRouter(s *ghttp.Server) {
+	/*s.BindHandler("/", func(r *ghttp.Request) {
+		r.Response.RedirectTo("/admin/index.html")
+	})*/
 
 	s.BindHookHandler("/*any", ghttp.HOOK_BEFORE_SERVE, cors)
-
-	loginCtrl := new(api.LoginController)
-	s.BindControllerMethod("GET:/loginkey", loginCtrl, "GetLoginCryptoKey")
-	s.BindControllerMethod("POST:/login", loginCtrl, "Login")
 
 	InitV1(s)
 }
@@ -33,10 +32,13 @@ func InitV1(s *ghttp.Server) {
 	//权限验证
 	v1.ALL("/*any", api.NewAuthorizer(model.Enforcer), ghttp.HOOK_BEFORE_SERVE)
 	v1.Bind([]ghttp.GroupItem{
-		{"GET", "/show", userCtrl, "Show"},
+		{"GET", "/user/loginkey", userCtrl, "GetLoginCryptoKey"},
+		{"GET", "/user/info", userCtrl, "Info"},
+		{"POST", "/user/login", userCtrl, "Login"},
+		{"POST", "/user/logout", userCtrl, "Logout"},
 	})
-
 	v1.Bind([]ghttp.GroupItem{
+		{"GET", "/show", userCtrl, "Show"},
 		{"GET", "/add", userCtrl, "AddUser"},
 	})
 }

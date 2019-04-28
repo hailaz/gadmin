@@ -5,6 +5,7 @@ import (
 
 	"github.com/casbin/casbin"
 	"github.com/gogf/gf/g/net/ghttp"
+	"github.com/gogf/gf/g/os/glog"
 	"github.com/hailaz/gadmin/library/common"
 )
 
@@ -13,7 +14,7 @@ import (
 func NewAuthorizer(e *casbin.Enforcer) ghttp.HandlerFunc {
 	return func(r *ghttp.Request) {
 		a := &BasicAuthorizer{enforcer: e}
-		if !a.CheckPermission(r.Request) {
+		if !a.CheckPermission(r) {
 			a.RequirePermission(r.Response.Writer)
 			r.ExitAll()
 		}
@@ -27,21 +28,24 @@ type BasicAuthorizer struct {
 
 // GetUserName gets the user name from the request.
 // Currently, only HTTP basic authentication is supported
-func (a *BasicAuthorizer) GetUserName(r *http.Request) string {
-	token := r.Header.Get("token")
-	jwtobj := common.PareseJWT(token)
-	if jwtobj != nil {
-		return jwtobj.Username
+func (a *BasicAuthorizer) GetUserName(r *ghttp.Request) string {
+	token := r.GetString("token", r.Header.Get("token"))
+	if token != "" {
+		jwtobj := common.PareseJWT(token)
+		if jwtobj != nil {
+			return jwtobj.Username
+		}
 	}
 	return ""
 }
 
 // CheckPermission checks the user/method/path combination from the request.
 // Returns true (permission granted) or false (permission forbidden)
-func (a *BasicAuthorizer) CheckPermission(r *http.Request) bool {
+func (a *BasicAuthorizer) CheckPermission(r *ghttp.Request) bool {
 	user := a.GetUserName(r)
 	method := r.Method
 	path := r.URL.Path
+	glog.Debugfln("user:%v ,method:%v ,path:%v", user, method, path)
 	return a.enforcer.Enforce(user, path, method)
 }
 

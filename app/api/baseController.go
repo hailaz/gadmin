@@ -16,9 +16,9 @@ func (c *BaseController) Shut() {
 }
 
 type BaseResult struct {
-	Code int         `json:"code"`
-	Msg  string      `json:"msg"`
-	Data interface{} `json:"data"`
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
 }
 
 // Response description
@@ -34,7 +34,7 @@ func Response(rsp *ghttp.Response, rs BaseResult) {
 // createTime:2019年04月25日 11:41:44
 // author:hailaz
 func Success(rsp *ghttp.Response, data interface{}) {
-	Response(rsp, BaseResult{Code: code.RESPONSE_SUCCESS, Msg: "success", Data: data})
+	Response(rsp, BaseResult{Code: code.RESPONSE_SUCCESS, Message: "success", Data: data})
 }
 
 // Fail description
@@ -43,9 +43,9 @@ func Success(rsp *ghttp.Response, data interface{}) {
 // author:hailaz
 func Fail(rsp *ghttp.Response, errCode int, msg ...string) {
 	if len(msg) > 0 {
-		Response(rsp, BaseResult{Code: errCode, Msg: msg[0]})
+		Response(rsp, BaseResult{Code: errCode, Message: msg[0]})
 	} else {
-		Response(rsp, BaseResult{Code: errCode, Msg: "fail"})
+		Response(rsp, BaseResult{Code: errCode, Message: "fail"})
 	}
 
 }
