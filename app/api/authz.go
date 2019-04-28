@@ -29,10 +29,10 @@ type BasicAuthorizer struct {
 // GetUserName gets the user name from the request.
 // Currently, only HTTP basic authentication is supported
 func (a *BasicAuthorizer) GetUserName(r *ghttp.Request) string {
-	token := r.GetString("token", r.Header.Get("token"))
+	token := r.GetString("token", r.Header.Get("X-Token"))
 	if token != "" {
-		jwtobj := common.PareseJWT(token)
-		if jwtobj != nil {
+		jwtobj, err := common.PareseJWT(token)
+		if err == nil && jwtobj != nil {
 			return jwtobj.Username
 		}
 	}

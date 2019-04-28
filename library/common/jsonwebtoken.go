@@ -1,6 +1,8 @@
 package common
 
 import (
+	"errors"
+
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gogf/gf/g/os/gtime"
 )
@@ -37,15 +39,18 @@ func CreateJWT(username string) (string, error) {
 //
 // createTime:2019年04月25日 15:48:51
 // author:hailaz
-func PareseJWT(tokenString string) *JsonWebToken {
+func PareseJWT(tokenString string) (*JsonWebToken, error) {
 	// sample token is expired.  override time so it parses as valid
-	token, _ := jwt.ParseWithClaims(tokenString, &JsonWebToken{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &JsonWebToken{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(TOKEN_SIGNING_KEY), nil
 	})
+	if err != nil {
+		return nil, err
+	}
 
 	if claims, ok := token.Claims.(*JsonWebToken); ok && token.Valid {
 		//fmt.Printf("%v %v", claims.Username, claims.StandardClaims.ExpiresAt)
-		return claims
+		return claims, nil
 	}
-	return nil
+	return nil, errors.New("token parese fail")
 }
