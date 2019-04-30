@@ -11,17 +11,17 @@
  Target Server Version : 50542
  File Encoding         : 65001
 
- Date: 30/04/2019 09:37:54
+ Date: 30/04/2019 09:37:45
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for role_name
+-- Table structure for policy_name
 -- ----------------------------
-DROP TABLE IF EXISTS `role_name`;
-CREATE TABLE `role_name`  (
+DROP TABLE IF EXISTS `policy_name`;
+CREATE TABLE `policy_name`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',

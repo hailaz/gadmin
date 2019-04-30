@@ -10,18 +10,20 @@ import (
 // 由数据库自动生成的结构体
 type User struct {
 	Id           int64  `json:"id"`             //
+	Status       int    `json:"status"`         //
 	UserName     string `json:"user_name"`      //
 	NickName     string `json:"nick_name"`      //
 	Password     string `json:"password"`       //
 	Email        string `json:"email"`          //
 	Phone        string `json:"phone"`          //
-	Qq           string `json:"qq"`             //
 	Sex          int    `json:"sex"`            //
 	Age          int    `json:"age"`            //
 	AddTime      string `json:"add_time"`       //
 	UpdateTime   string `json:"update_time"`    //
 	AddUserId    int64  `json:"add_user_id"`    //
 	ThirdPartyId int64  `json:"third_party_id"` //
+	Introduction string `json:"Introduction"`   //
+	Avatar       string `json:"avatar"`         //
 }
 
 // TableName 获取表名

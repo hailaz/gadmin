@@ -1,11 +1,10 @@
 package api
 
 import (
-	"net/http"
-
 	"github.com/casbin/casbin"
 	"github.com/gogf/gf/g/net/ghttp"
 	"github.com/gogf/gf/g/os/glog"
+	"github.com/hailaz/gadmin/library/code"
 	"github.com/hailaz/gadmin/library/common"
 )
 
@@ -15,7 +14,7 @@ func NewAuthorizer(e *casbin.Enforcer) ghttp.HandlerFunc {
 	return func(r *ghttp.Request) {
 		a := &BasicAuthorizer{enforcer: e}
 		if !a.CheckPermission(r) {
-			a.RequirePermission(r.Response.Writer)
+			a.RequirePermission(r)
 			r.ExitAll()
 		}
 	}
@@ -50,7 +49,8 @@ func (a *BasicAuthorizer) CheckPermission(r *ghttp.Request) bool {
 }
 
 // RequirePermission returns the 403 Forbidden to the client
-func (a *BasicAuthorizer) RequirePermission(w http.ResponseWriter) {
-	w.WriteHeader(403)
-	w.Write([]byte("403 Forbidden\n"))
+func (a *BasicAuthorizer) RequirePermission(r *ghttp.Request) {
+	r.Response.WriteJson(BaseResult{Code: code.RESPONSE_ERROR, Message: "无权限"})
+	//w.WriteHeader(403)
+	//w.Write([]byte("403 Forbidden\n"))
 }

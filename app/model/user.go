@@ -1,10 +1,21 @@
 package model
 
-import "github.com/gogf/gf/g/crypto/gmd5"
+import (
+	"github.com/gogf/gf/g/crypto/gmd5"
+	"github.com/gogf/gf/g/database/gdb"
+)
 
 const (
 	ENCRYPTMD5 = "gadmin"
 )
+
+// GetUserList description
+//
+// createTime:2019年04月30日 10:20:50
+// author:hailaz
+func GetUserList() (gdb.Result, error) {
+	return defDB.Table("user").All()
+}
 
 // GetUserByName description
 //

@@ -6,6 +6,12 @@ https://github.com/PanJiaChen/vue-element-admin
 fork修改后
 https://github.com/hailaz/gadmin-vue
 
+后端技术栈
+gframe框架
+登录使用RSA加密
+权限使用casbin
+API授权使用JWT
+
 
 
 casbin RBAC

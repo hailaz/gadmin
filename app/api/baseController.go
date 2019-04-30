@@ -2,7 +2,6 @@ package api
 
 import (
 	"github.com/gogf/gf/g/frame/gmvc"
-	"github.com/gogf/gf/g/net/ghttp"
 	"github.com/hailaz/gadmin/library/code"
 )
 
@@ -25,27 +24,28 @@ type BaseResult struct {
 //
 // createTime:2019年04月25日 11:32:47
 // author:hailaz
-func Response(rsp *ghttp.Response, rs BaseResult) {
-	rsp.WriteJson(rs)
+func Response(c gmvc.Controller, rs BaseResult) {
+	c.Response.WriteJson(rs)
+	c.Exit()
 }
 
 // Success description
 //
 // createTime:2019年04月25日 11:41:44
 // author:hailaz
-func Success(rsp *ghttp.Response, data interface{}) {
-	Response(rsp, BaseResult{Code: code.RESPONSE_SUCCESS, Message: "success", Data: data})
+func Success(c gmvc.Controller, data interface{}) {
+	Response(c, BaseResult{Code: code.RESPONSE_SUCCESS, Message: "success", Data: data})
 }
 
 // Fail description
 //
 // createTime:2019年04月25日 11:43:34
 // author:hailaz
-func Fail(rsp *ghttp.Response, errCode int, msg ...string) {
+func Fail(c gmvc.Controller, errCode int, msg ...string) {
 	if len(msg) > 0 {
-		Response(rsp, BaseResult{Code: errCode, Message: msg[0]})
+		Response(c, BaseResult{Code: errCode, Message: msg[0]})
 	} else {
-		Response(rsp, BaseResult{Code: errCode, Message: "fail"})
+		Response(c, BaseResult{Code: errCode, Message: "fail"})
 	}
 
 }

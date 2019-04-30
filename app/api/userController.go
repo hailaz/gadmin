@@ -18,12 +18,42 @@ func (c *UserController) Show() {
 	c.Response.Writeln("Controller Show")
 }
 
+func (c *UserController) List() {
+	type User struct {
+		Id           int64  `json:"id"`             //
+		UserName     string `json:"user_name"`      //
+		NickName     string `json:"nick_name"`      //
+		Email        string `json:"email"`          //
+		Phone        string `json:"phone"`          //
+		Sex          int    `json:"sex"`            //
+		Age          int    `json:"age"`            //
+		AddTime      string `json:"add_time"`       //
+		UpdateTime   string `json:"update_time"`    //
+		AddUserId    int64  `json:"add_user_id"`    //
+		ThirdPartyId int64  `json:"third_party_id"` //
+		Introduction string `json:"Introduction"`   //
+		Avatar       string `json:"avatar"`         //
+	}
+	var userList struct {
+		List  []User `json:"items"`
+		Total int    `json:"total"`
+	}
+	r, err := model.GetUserList()
+	if err != nil {
+		glog.Error(err)
+		Fail(c.Controller, code.RESPONSE_ERROR)
+	}
+	r.ToStructs(&userList.List)
+	Success(c.Controller, userList)
+}
+
 func (c *UserController) AddUser() {
 	user := c.Request.GetString("user")
 	pwd := c.Request.GetString("pwd")
 	u := model.User{UserName: user, Password: pwd}
 	u.Insert()
-	c.Response.Writeln("Success")
+
+	Success(c.Controller, "success")
 }
 
 // GetLoginCryptoKey description
@@ -36,7 +66,7 @@ func (c *UserController) GetLoginCryptoKey() {
 
 	glog.Debug("kid:" + kid)
 
-	Success(c.Response, ck)
+	Success(c.Controller, ck)
 
 }
 
@@ -52,7 +82,7 @@ func (c *UserController) Login() {
 
 	if ck := common.GetCryptoKey(kid); ck != nil {
 		if gtime.Second()-ck.TimeStamp >= 5 {
-			Fail(c.Response, code.RESPONSE_ERROR, "密钥超时")
+			Fail(c.Controller, code.RESPONSE_ERROR, "密钥超时")
 			return
 		}
 		glog.Debugfln("%v", ck.Id)
@@ -60,7 +90,7 @@ func (c *UserController) Login() {
 		glog.Debugfln("%v %v", name, pwd)
 		decodePwd, err := base64.StdEncoding.DecodeString(pwd)
 		if err != nil {
-			Fail(c.Response, code.RESPONSE_ERROR)
+			Fail(c.Controller, code.RESPONSE_ERROR)
 			return
 		}
 		decryptPwd, _ := common.RsaDecrypt(decodePwd, []byte(ck.PrivateKey))
@@ -71,7 +101,7 @@ func (c *UserController) Login() {
 			u, err := model.GetUserByName(name)
 			if err != nil {
 				glog.Error(err)
-				Fail(c.Response, 1)
+				Fail(c.Controller, 1)
 				return
 			}
 			if u.Password == model.EncryptPassword(password) {
@@ -80,13 +110,13 @@ func (c *UserController) Login() {
 					Token string `json:"token"`
 				}
 				tk.Token = token
-				Success(c.Response, tk)
+				Success(c.Controller, tk)
 				return
 			}
 
 		}
 	}
-	Fail(c.Response, code.RESPONSE_ERROR)
+	Fail(c.Controller, code.RESPONSE_ERROR)
 }
 
 // {
@@ -106,9 +136,9 @@ func (c *UserController) Info() {
 	info.Introduction = "I am a super administrator"
 	info.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
 	info.Name = "Super Admin"
-	Success(c.Response, info)
+	Success(c.Controller, info)
 }
 
 func (c *UserController) Logout() {
-	Success(c.Response, "success")
+	Success(c.Controller, "success")
 }
