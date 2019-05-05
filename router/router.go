@@ -43,15 +43,18 @@ func InitV1(s *ghttp.Server) {
 	//权限验证
 	s.Group("/v1").ALL("/*any", api.NewAuthorizer(model.Enforcer), ghttp.HOOK_BEFORE_SERVE)
 	userCtrl := new(api.UserController)
+	roleCtrl := new(api.RoleController)
+
 	// user
 	BindGroup(s, "/v1", []ghttp.GroupItem{
-		{"GET", "/user/loginkey", userCtrl, "GetLoginCryptoKey"},
+		{"GET", "/user/loginkey", userCtrl, "GetLoginCryptoKey", "false"},
+		{"POST", "/user/login", userCtrl, "Login", "false"},
+		{"POST", "/user/logout", userCtrl, "Logout", "false"},
 		{"GET", "/user/info", userCtrl, "Info"},
-		{"POST", "/user/login", userCtrl, "Login"},
-		{"POST", "/user/logout", userCtrl, "Logout"},
-
 		{"GET", "/user/list", userCtrl, "List"},
 		{"POST", "/user/add", userCtrl, "AddUser"},
+
+		{"REST", "/role", roleCtrl},
 	})
 	// role
 	BindGroup(s, "/v1", []ghttp.GroupItem{
@@ -88,7 +91,20 @@ func BindGroup(s *ghttp.Server, path string, items []ghttp.GroupItem) {
 	g := s.Group(path)
 	g.Bind(items)
 	for _, item := range items {
-		addPolicy("system", path+gconv.String(item[1]), common.GetAction(gconv.String(item[0])))
+		glog.Debug(gconv.String(item[1]))
+		if len(item) > 4 && gconv.String(item[4]) == "false" { //不走权限的api
+			addPolicy("*", path+gconv.String(item[1]), common.GetAction(gconv.String(item[0])))
+		} else { //走权限的api
+			if gconv.String(item[0]) == "REST" { //rest api
+				addPolicy("system", path+gconv.String(item[1]), model.ACTION_GET)
+				addPolicy("system", path+gconv.String(item[1]), model.ACTION_POST)
+				addPolicy("system", path+gconv.String(item[1]), model.ACTION_PUT)
+				addPolicy("system", path+gconv.String(item[1]), model.ACTION_DELETE)
+			} else {
+				addPolicy("system", path+gconv.String(item[1]), common.GetAction(gconv.String(item[0])))
+			}
+		}
+
 	}
 
 }

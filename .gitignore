@@ -6,3 +6,7 @@ docfile/tools/codeCreater/xorm/model/*
 
 #日志文件
 *.log
+
+
+debug
+.vscode/*

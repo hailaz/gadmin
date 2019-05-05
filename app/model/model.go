@@ -14,6 +14,8 @@ var Enforcer *casbin.Enforcer
 const (
 	ACTION_GET             = "(GET)"
 	ACTION_POST            = "(POST)"
+	ACTION_PUT             = "(PUT)"
+	ACTION_DELETE          = "(DELETE)"
 	ACTION_ALL             = "(GET)|(POST)|(PUT)|(DELETE)|(PATCH)|(OPTIONS)|(HEAD)"
 	ADMIN_NAME             = "admin" //超级管理员用户名
 	ADMIN_NICK_NAME        = "超级管理员" //超级管理员显示名称
@@ -53,9 +55,6 @@ func initCasbin() {
 	Enforcer.LoadPolicy()
 	//Enforcer.DeletePermissionsForUser("group_admin")
 	Enforcer.AddPolicy("group_admin", "*", ACTION_ALL)
-	Enforcer.AddPolicy("*", "/v1/user/loginkey", ACTION_GET)
-	Enforcer.AddPolicy("*", "/v1/user/login", ACTION_POST)
-	Enforcer.AddPolicy("*", "/v1/user/logout", ACTION_POST)
 	Enforcer.AddGroupingPolicy(ADMIN_NAME, "group_admin")
 
 }
