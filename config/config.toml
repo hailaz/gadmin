@@ -1,5 +1,5 @@
 
-port = 8080
+port = 8199
 
 #日志目录，默认log目录
 logpath = "log"

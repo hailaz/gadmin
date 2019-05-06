@@ -44,6 +44,7 @@ func InitV1(s *ghttp.Server) {
 	s.Group("/v1").ALL("/*any", api.NewAuthorizer(model.Enforcer), ghttp.HOOK_BEFORE_SERVE)
 	userCtrl := new(api.UserController)
 	roleCtrl := new(api.RoleController)
+	policyCtrl := new(api.PolicyController)
 
 	// user
 	BindGroup(s, "/v1", []ghttp.GroupItem{
@@ -55,6 +56,7 @@ func InitV1(s *ghttp.Server) {
 		{"POST", "/user/add", userCtrl, "AddUser"},
 
 		{"REST", "/role", roleCtrl},
+		{"REST", "/policy", policyCtrl},
 	})
 	// role
 	BindGroup(s, "/v1", []ghttp.GroupItem{

@@ -8,7 +8,7 @@ import (
 // 由数据库自动生成的结构体
 type PolicyName struct {
 	Id         int64  `json:"id"`         //
-	Key        string `json:"key"`        //
+	FullPath   string `json:"full_path"`  //
 	Name       string `json:"name"`       //
 	Descrption string `json:"descrption"` //
 }
