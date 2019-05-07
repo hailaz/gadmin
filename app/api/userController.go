@@ -142,3 +142,40 @@ func (c *UserController) Info() {
 func (c *UserController) Logout() {
 	Success(c.Controller, "success")
 }
+
+func (c *UserController) Get() {
+	page := c.Request.GetInt("page", 1)
+	limit := c.Request.GetInt("limit", 10)
+	var userList struct {
+		List  []model.UserOut `json:"items"`
+		Total int             `json:"total"`
+	}
+	userList.List, userList.Total = model.GetUserByPageLimt(page, limit)
+	Success(c.Controller, userList)
+}
+func (c *UserController) Post() {
+	Success(c.Controller, "success")
+}
+func (c *UserController) Put() {
+	Success(c.Controller, "success")
+}
+func (c *UserController) Delete() {
+	data := c.Request.GetJson()
+	id := data.GetInt64("id")
+	if id < 1 {
+		Fail(c.Controller, code.RESPONSE_ERROR)
+	}
+	u := new(model.User)
+	user, err := u.GetById(id)
+	if err != nil {
+		Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
+	}
+	if user.UserName == "admin" {
+		Fail(c.Controller, code.RESPONSE_ERROR, "无权限")
+	}
+	res, _ := u.DeleteById(id)
+	if res < 0 {
+		Fail(c.Controller, code.RESPONSE_ERROR)
+	}
+	Success(c.Controller, "success")
+}

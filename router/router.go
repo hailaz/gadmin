@@ -48,6 +48,7 @@ func InitV1(s *ghttp.Server) {
 		{"GET", "/user/info", userCtrl, "Info"},
 		{"GET", "/user/list", userCtrl, "List"},
 		{"POST", "/user/add", userCtrl, "AddUser"},
+		{"REST", "/user", userCtrl},
 
 		{"REST", "/role", roleCtrl},
 		{"REST", "/policy", policyCtrl},

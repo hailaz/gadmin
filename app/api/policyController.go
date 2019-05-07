@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/gogf/gf/g/os/glog"
 	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/code"
 )
@@ -39,7 +38,6 @@ func (c *PolicyController) Put() {
 	data := c.Request.GetJson()
 	name := data.GetString("name")
 	path := data.GetString("policy")
-	glog.Debug(name, path)
 	if name == UNDEFIND_POLICY_NAME {
 		Fail(c.Controller, code.RESPONSE_ERROR)
 	} else {
@@ -57,7 +55,6 @@ func (c *PolicyController) Delete() {
 
 func (c *PolicyController) GetPolicyByRole() {
 	role := c.Request.GetString("role")
-	glog.Debug(role)
 	var list struct {
 		List           []model.Policy `json:"all_policy_items"`
 		RolePolicyList []model.Policy `json:"role_policy_items"`
@@ -74,7 +71,6 @@ func (c *PolicyController) SetPolicyByRole() {
 	data := c.Request.GetJson()
 	role := data.GetString("role")
 	policys := data.GetStrings("policys")
-	glog.Debug(role, policys)
 
 	var routerMap = make(map[string]model.RolePolicy)
 	for _, item := range policys {
