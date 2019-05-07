@@ -54,8 +54,8 @@ func initCasbin() {
 	Enforcer = casbin.NewEnforcer("./config/rbac.conf", a)
 	Enforcer.LoadPolicy()
 	//Enforcer.DeletePermissionsForUser("group_admin")
-	Enforcer.AddPolicy("group_admin", "*", ACTION_ALL)
-	Enforcer.AddGroupingPolicy(ADMIN_NAME, "group_admin")
+	Enforcer.AddPolicy(ADMIN_NAME, "*", ACTION_ALL)
+	//Enforcer.AddGroupingPolicy("system", "user")
 
 }
 

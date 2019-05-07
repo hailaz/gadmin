@@ -15,11 +15,20 @@ type Policy struct {
 	Descrption string `json:"descrption"` //
 }
 
+type RolePolicy struct {
+	Role string
+	Path string
+	Atc  string
+}
+
 // GetPolicyList 获取权限列表
 //
 // createTime:2019年05月06日 17:24:12
 // author:hailaz
 func GetPolicyList(page, limit int, defaultname string) ([]Policy, int) {
+	if page < 1 {
+		page = 1
+	}
 	policyList := make([]Policy, 0)
 	policys := Enforcer.GetPermissionsForUser("system")
 	total := len(policys)
@@ -52,6 +61,22 @@ func GetPolicyList(page, limit int, defaultname string) ([]Policy, int) {
 		policyList = policyList[(page-1)*limit : (page-1)*limit+limit]
 	}
 	return policyList, total
+}
+
+// GetPolicyByRole description
+//
+// createTime:2019年05月07日 11:35:33
+// author:hailaz
+func GetPolicyByRole(role string) []Policy {
+	policyList := make([]Policy, 0)
+	policys := Enforcer.GetPermissionsForUser(role)
+	glog.Debug(policys)
+	for _, item := range policys {
+		full := fmt.Sprintf("%v:%v", item[1], item[2])
+		p := Policy{Policy: full}
+		policyList = append(policyList, p)
+	}
+	return policyList
 }
 
 // GetAllPolicy description
@@ -100,4 +125,24 @@ func UpdatePolicyByFullPath(path, name string) error {
 		return errors.New("update fail")
 	}
 	return nil
+}
+
+// ReSetPolicy 更新路由
+//
+// createTime:2019年04月29日 17:30:26
+// author:hailaz
+func ReSetPolicy(role string, rmap map[string]RolePolicy) {
+	old := Enforcer.GetPermissionsForUser(role)
+	for _, item := range old {
+		glog.Debug(item)
+		full := fmt.Sprintf("%v %v %v", item[0], item[1], item[2])
+		if _, ok := rmap[full]; ok { //从待插入列表中删除已存在的路由
+			delete(rmap, full)
+		} else { //删除不存在的旧路由
+			Enforcer.DeletePermissionForUser(item[0], item[1], item[2])
+		}
+	}
+	for _, item := range rmap { //插入新路由
+		Enforcer.AddPolicy(item.Role, item.Path, item.Atc)
+	}
 }

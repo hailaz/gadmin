@@ -11,13 +11,7 @@ import (
 	"github.com/hailaz/gadmin/library/common"
 )
 
-type Policy struct {
-	Role string
-	Path string
-	Atc  string
-}
-
-var routerMap = make(map[string]Policy)
+var routerMap = make(map[string]model.RolePolicy)
 
 func cors(r *ghttp.Request) {
 	glog.Debug(r.Request.RequestURI)
@@ -31,7 +25,7 @@ func InitRouter(s *ghttp.Server) {
 	InitV1(s)
 
 	//glog.Debug(model.Enforcer.GetRolesForUser("admin"))
-	ReSetPolicy()
+	model.ReSetPolicy("system", routerMap)
 }
 
 // InitV1 初始化V1
@@ -57,32 +51,14 @@ func InitV1(s *ghttp.Server) {
 
 		{"REST", "/role", roleCtrl},
 		{"REST", "/policy", policyCtrl},
+		{"GET", "/policy/byrole", policyCtrl, "GetPolicyByRole"},
+		{"PUT", "/policy/byrole", policyCtrl, "SetPolicyByRole"},
 	})
 	// role
 	BindGroup(s, "/v1", []ghttp.GroupItem{
 		{"GET", "/show", userCtrl, "Show"},
 		{"GET", "/add", userCtrl, "AddUser"},
 	})
-}
-
-// ReSetPolicy description
-//
-// createTime:2019年04月29日 17:30:26
-// author:hailaz
-func ReSetPolicy() {
-	old := model.Enforcer.GetPermissionsForUser("system")
-	for _, item := range old {
-		glog.Debug(item)
-		full := fmt.Sprintf("%v %v %v", item[0], item[1], item[2])
-		if _, ok := routerMap[full]; ok { //从待插入列表中删除已存在的路由
-			delete(routerMap, full)
-		} else { //删除不存在的旧路由
-			model.Enforcer.DeletePermissionForUser(item[0], item[1], item[2])
-		}
-	}
-	for _, item := range routerMap { //插入新路由
-		model.Enforcer.AddPolicy(item.Role, item.Path, item.Atc)
-	}
 }
 
 // BindGroup path string,description
@@ -116,5 +92,5 @@ func BindGroup(s *ghttp.Server, path string, items []ghttp.GroupItem) {
 // createTime:2019年04月29日 17:18:25
 // author:hailaz
 func addPolicy(role, path, atc string) {
-	routerMap[fmt.Sprintf("%v %v %v", role, path, atc)] = Policy{Role: role, Path: path, Atc: atc}
+	routerMap[fmt.Sprintf("%v %v %v", role, path, atc)] = model.RolePolicy{Role: role, Path: path, Atc: atc}
 }
