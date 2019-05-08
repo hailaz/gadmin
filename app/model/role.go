@@ -54,6 +54,20 @@ func GetRoleList(page, limit int, defaultname string) ([]Role, int) {
 	return roleList, total
 }
 
+// GetRoleByUserName description
+//
+// createTime:2019年05月08日 15:08:19
+// author:hailaz
+func GetRoleByUserName(userName string) []Role {
+	roles := Enforcer.GetRolesForUser(userName)
+	roleList := make([]Role, 0)
+	for _, item := range roles {
+		p := Role{Role: item}
+		roleList = append(roleList, p)
+	}
+	return roleList
+}
+
 // GetAllRole description
 //
 // createTime:2019年04月30日 10:20:50
@@ -142,4 +156,15 @@ func DeleteRole(role string) error {
 		return nil
 	}
 	return errors.New("delete fail")
+}
+
+// SetRoleByUserName description
+//
+// createTime:2019年05月08日 15:22:05
+// author:hailaz
+func SetRoleByUserName(userName string, roles []string) {
+	Enforcer.DeleteRolesForUser(userName)
+	for _, item := range roles {
+		Enforcer.AddRoleForUser(userName, item)
+	}
 }

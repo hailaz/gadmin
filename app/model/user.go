@@ -1,8 +1,11 @@
 package model
 
 import (
+	"errors"
+
 	"github.com/gogf/gf/g/crypto/gmd5"
 	"github.com/gogf/gf/g/database/gdb"
+	"github.com/gogf/gf/g/os/gtime"
 )
 
 const (
@@ -87,4 +90,21 @@ func GetUserByName(name string) (*User, error) {
 // author:hailaz
 func EncryptPassword(data string) string {
 	return gmd5.EncryptString(data + ENCRYPTMD5)
+}
+
+// UpdateUserById description
+//
+// createTime:2019年05月08日 14:28:18
+// author:hailaz
+func UpdateUserById(id int64, udmap gdb.Map) error {
+	udmap["update_time"] = gtime.Now().String()
+	r, err := defDB.Table("user").Data(udmap).Where("id=?", id).Update()
+	if err != nil {
+		return err
+	}
+	i, _ := r.RowsAffected()
+	if i < 0 {
+		return errors.New("update fail")
+	}
+	return nil
 }

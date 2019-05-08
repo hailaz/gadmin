@@ -13,11 +13,16 @@ type RoleController struct {
 func (c *RoleController) Get() {
 	page := c.Request.GetInt("page", 1)
 	limit := c.Request.GetInt("limit", 10)
+	username := c.Request.GetString("username")
 	var list struct {
-		List  []model.Role `json:"items"`
-		Total int          `json:"total"`
+		List         []model.Role `json:"items"`
+		UserRoleList []model.Role `json:"role_items"`
+		Total        int          `json:"total"`
 	}
 	list.List, list.Total = model.GetRoleList(page, limit, UNDEFIND_POLICY_NAME)
+	if username != "" {
+		list.UserRoleList = model.GetRoleByUserName(username)
+	}
 
 	Success(c.Controller, list)
 }
@@ -60,4 +65,13 @@ func (c *RoleController) Delete() {
 		Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
 	}
 	Success(c.Controller, "Delete")
+}
+
+func (c *RoleController) SetRoleByUserName() {
+	data := c.Request.GetJson()
+	roles := data.GetStrings("roles")
+	username := data.GetString("username")
+	model.SetRoleByUserName(username, roles)
+
+	Success(c.Controller, "success")
 }

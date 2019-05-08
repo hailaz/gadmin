@@ -51,14 +51,11 @@ func InitV1(s *ghttp.Server) {
 		{"REST", "/user", userCtrl},
 
 		{"REST", "/role", roleCtrl},
+		{"PUT", "/role/byuser", roleCtrl, "SetRoleByUserName"},
+
 		{"REST", "/policy", policyCtrl},
 		{"GET", "/policy/byrole", policyCtrl, "GetPolicyByRole"},
 		{"PUT", "/policy/byrole", policyCtrl, "SetPolicyByRole"},
-	})
-	// role
-	BindGroup(s, "/v1", []ghttp.GroupItem{
-		{"GET", "/show", userCtrl, "Show"},
-		{"GET", "/add", userCtrl, "AddUser"},
 	})
 }
 

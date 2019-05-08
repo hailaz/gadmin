@@ -140,6 +140,12 @@ func ReSetPolicy(role string, rmap map[string]RolePolicy) {
 			delete(rmap, full)
 		} else { //删除不存在的旧路由
 			Enforcer.DeletePermissionForUser(item[0], item[1], item[2])
+			if role == "system" {
+				p, _ := GetPolicyByFullPath(fmt.Sprintf("%v:%v", item[1], item[2]))
+				if p.Id > 0 {
+					p.DeleteById(p.Id)
+				}
+			}
 		}
 	}
 	for _, item := range rmap { //插入新路由

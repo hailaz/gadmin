@@ -3,6 +3,8 @@ package api
 import (
 	"encoding/base64"
 
+	"github.com/gogf/gf/g/database/gdb"
+
 	"github.com/gogf/gf/g/os/glog"
 	"github.com/gogf/gf/g/os/gtime"
 	"github.com/hailaz/gadmin/app/model"
@@ -12,10 +14,6 @@ import (
 
 type UserController struct {
 	BaseController
-}
-
-func (c *UserController) Show() {
-	c.Response.Writeln("Controller Show")
 }
 
 func (c *UserController) List() {
@@ -45,15 +43,6 @@ func (c *UserController) List() {
 	}
 	r.ToStructs(&userList.List)
 	Success(c.Controller, userList)
-}
-
-func (c *UserController) AddUser() {
-	user := c.Request.GetString("user")
-	pwd := c.Request.GetString("pwd")
-	u := model.User{UserName: user, Password: pwd}
-	u.Insert()
-
-	Success(c.Controller, "success")
 }
 
 // GetLoginCryptoKey description
@@ -154,9 +143,73 @@ func (c *UserController) Get() {
 	Success(c.Controller, userList)
 }
 func (c *UserController) Post() {
-	Success(c.Controller, "success")
+	data := c.Request.GetJson()
+	username := data.GetString("user_name")
+	nickname := data.GetString("nick_name")
+	email := data.GetString("email")
+	password := data.GetString("password")
+	passwordconfirm := data.GetString("passwordconfirm")
+	phone := data.GetString("phone")
+
+	u, err := model.GetUserByName(username)
+	if err != nil || u.Id != 0 {
+		Fail(c.Controller, code.RESPONSE_ERROR, "用户已存在")
+	}
+	if password == "" {
+		Fail(c.Controller, code.RESPONSE_ERROR, "密码为空")
+	}
+	if password != passwordconfirm {
+		Fail(c.Controller, code.RESPONSE_ERROR, "输入密码不一致")
+	}
+	user := model.User{UserName: username, Password: password, NickName: nickname, Email: email, Phone: phone}
+	uid, _ := user.Insert()
+	if uid > 0 {
+		Success(c.Controller, "success")
+	}
+
+	glog.Debug(uid)
+	glog.Debug(data.ToJsonString())
+	Fail(c.Controller, code.RESPONSE_ERROR)
 }
 func (c *UserController) Put() {
+	data := c.Request.GetJson()
+	username := data.GetString("user_name")
+	nickname := data.GetString("nick_name")
+	email := data.GetString("email")
+	password := data.GetString("password")
+	passwordconfirm := data.GetString("passwordconfirm")
+	phone := data.GetString("phone")
+
+	u, err := model.GetUserByName(username)
+	if err != nil || u.Id == 0 {
+		Fail(c.Controller, code.RESPONSE_ERROR, "用户不存在")
+	}
+	umap := gdb.Map{}
+	if nickname != u.NickName && nickname != "" {
+		umap["nick_name"] = nickname
+	}
+	if email != u.Email && email != "" {
+		umap["email"] = email
+	}
+	if phone != u.Phone && phone != "" {
+		umap["phone"] = phone
+	}
+	if password == "" {
+		err := model.UpdateUserById(u.Id, umap)
+		if err != nil {
+			Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
+		}
+	} else {
+		if password != passwordconfirm {
+			Fail(c.Controller, code.RESPONSE_ERROR, "输入密码不一致")
+		}
+		umap["password"] = model.EncryptPassword(password)
+		err := model.UpdateUserById(u.Id, umap)
+		if err != nil {
+			Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
+		}
+	}
+
 	Success(c.Controller, "success")
 }
 func (c *UserController) Delete() {
