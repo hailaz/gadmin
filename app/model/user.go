@@ -29,6 +29,13 @@ type UserOut struct {
 	Avatar       string `json:"avatar"`         //
 }
 
+type UserInfo struct {
+	Roles        []string `json:"roles"`
+	Introduction string   `json:"introduction"`
+	Avatar       string   `json:"avatar"`
+	Name         string   `json:"name"`
+}
+
 // GetUserByPageLimt description
 //
 // createTime:2019年05月07日 16:11:41
@@ -107,4 +114,23 @@ func UpdateUserById(id int64, udmap gdb.Map) error {
 		return errors.New("update fail")
 	}
 	return nil
+}
+
+// GetUserInfo description
+//
+// createTime:2019年05月08日 16:53:24
+// author:hailaz
+func GetUserInfo(u *User) UserInfo {
+	info := UserInfo{}
+	if u.UserName == "admin" {
+		info.Roles = []string{"admin"}
+	} else {
+		info.Roles = Enforcer.GetRolesForUser(u.UserName)
+	}
+
+	info.Avatar = u.Avatar
+	info.Introduction = u.Introduction
+	info.Name = u.NickName
+
+	return info
 }

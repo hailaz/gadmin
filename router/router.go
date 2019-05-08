@@ -45,7 +45,7 @@ func InitV1(s *ghttp.Server) {
 		{"GET", "/user/loginkey", userCtrl, "GetLoginCryptoKey", "false"},
 		{"POST", "/user/login", userCtrl, "Login", "false"},
 		{"POST", "/user/logout", userCtrl, "Logout", "false"},
-		{"GET", "/user/info", userCtrl, "Info"},
+		{"GET", "/user/info", userCtrl, "Info", "false"},
 		{"GET", "/user/list", userCtrl, "List"},
 		{"POST", "/user/add", userCtrl, "AddUser"},
 		{"REST", "/user", userCtrl},

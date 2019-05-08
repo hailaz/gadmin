@@ -115,17 +115,11 @@ func (c *UserController) Login() {
 //     name: 'Super Admin'
 //   }
 func (c *UserController) Info() {
-	var info struct {
-		Roles        []string `json:"roles"`
-		Introduction string   `json:"introduction"`
-		Avatar       string   `json:"avatar"`
-		Name         string   `json:"name"`
+	u := c.GetUser(c.Request)
+	if u != nil {
+		Success(c.Controller, model.GetUserInfo(u))
 	}
-	info.Roles = []string{"admin"}
-	info.Introduction = "I am a super administrator"
-	info.Avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
-	info.Name = "Super Admin"
-	Success(c.Controller, info)
+	Fail(c.Controller, code.RESPONSE_ERROR, "获取用户信息失败")
 }
 
 func (c *UserController) Logout() {
@@ -230,5 +224,6 @@ func (c *UserController) Delete() {
 	if res < 0 {
 		Fail(c.Controller, code.RESPONSE_ERROR)
 	}
+	model.Enforcer.DeleteRolesForUser(user.UserName)
 	Success(c.Controller, "success")
 }

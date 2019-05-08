@@ -2,7 +2,10 @@ package api
 
 import (
 	"github.com/gogf/gf/g/frame/gmvc"
+	"github.com/gogf/gf/g/net/ghttp"
+	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/code"
+	"github.com/hailaz/gadmin/library/common"
 )
 
 type BaseController struct {
@@ -48,4 +51,17 @@ func Fail(c gmvc.Controller, errCode int, msg ...string) {
 		Response(c, BaseResult{Code: errCode, Message: "fail"})
 	}
 
+}
+
+func (c *BaseController) GetUser(r *ghttp.Request) *model.User {
+	user := new(model.User)
+	token := r.GetString("token", r.Header.Get("X-Token"))
+	if token != "" {
+		jwtobj, err := common.PareseJWT(token)
+		if err == nil && jwtobj != nil {
+			user, _ = model.GetUserByName(jwtobj.Username)
+			return user
+		}
+	}
+	return nil
 }
