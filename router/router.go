@@ -20,12 +20,18 @@ func cors(r *ghttp.Request) {
 
 func InitRouter(s *ghttp.Server) {
 
-	s.BindHookHandler("/v1/*any", ghttp.HOOK_BEFORE_SERVE, cors)
-
+	//s.BindHookHandler("/*", ghttp.HOOK_BEFORE_SERVE, cors)
+	s.BindHandler("GET:/loginkey", api.GetLoginCryptoKey)
+	s.BindHandler("POST:/login", api.GfJWTMiddleware.LoginHandler)
 	InitV1(s)
 
-	//glog.Debug(model.Enforcer.GetRolesForUser("admin"))
 	model.ReSetPolicy("system", routerMap)
+}
+
+// authHook is the HOOK function implements JWT logistics.
+func authHook(r *ghttp.Request) {
+	r.Response.CORSDefault()
+	api.GfJWTMiddleware.MiddlewareFunc()(r)
 }
 
 // InitV1 初始化V1
@@ -35,24 +41,21 @@ func InitRouter(s *ghttp.Server) {
 func InitV1(s *ghttp.Server) {
 	//v1 := s.Group("/v1")
 	//权限验证
-	s.Group("/v1").ALL("/*any", api.NewAuthorizer(model.Enforcer), ghttp.HOOK_BEFORE_SERVE)
+	s.Group("/v1").ALL("/*any", authHook, ghttp.HOOK_BEFORE_SERVE)
 	userCtrl := new(api.UserController)
 	roleCtrl := new(api.RoleController)
 	policyCtrl := new(api.PolicyController)
 
 	// user
 	BindGroup(s, "/v1", []ghttp.GroupItem{
-		{"GET", "/user/loginkey", userCtrl, "GetLoginCryptoKey", "false"},
-		{"POST", "/user/login", userCtrl, "Login", "false"},
+		// 用户
 		{"POST", "/user/logout", userCtrl, "Logout", "false"},
 		{"GET", "/user/info", userCtrl, "Info", "false"},
-		{"GET", "/user/list", userCtrl, "List"},
-		{"POST", "/user/add", userCtrl, "AddUser"},
 		{"REST", "/user", userCtrl},
-
+		// 角色
 		{"REST", "/role", roleCtrl},
 		{"PUT", "/role/byuser", roleCtrl, "SetRoleByUserName"},
-
+		// 权限
 		{"REST", "/policy", policyCtrl},
 		{"GET", "/policy/byrole", policyCtrl, "GetPolicyByRole"},
 		{"PUT", "/policy/byrole", policyCtrl, "SetPolicyByRole"},

@@ -116,11 +116,17 @@ func UpdateUserById(id int64, udmap gdb.Map) error {
 	return nil
 }
 
+// {
+//     roles: ['admin'],
+//     introduction: 'I am a super administrator',
+//     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+//     name: 'Super Admin'
+//   }
 // GetUserInfo description
 //
 // createTime:2019年05月08日 16:53:24
 // author:hailaz
-func GetUserInfo(u *User) UserInfo {
+func (u *User) GetUserInfo() UserInfo {
 	info := UserInfo{}
 	if u.UserName == "admin" {
 		info.Roles = []string{"admin"}

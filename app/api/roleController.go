@@ -24,7 +24,7 @@ func (c *RoleController) Get() {
 		list.UserRoleList = model.GetRoleByUserName(username)
 	}
 
-	Success(c.Controller, list)
+	Success(c.Request, list)
 }
 
 func (c *RoleController) Post() {
@@ -34,10 +34,10 @@ func (c *RoleController) Post() {
 
 	err := model.AddRole(role, name)
 	if err != nil {
-		Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
+		Fail(c.Request, code.RESPONSE_ERROR, err.Error())
 	}
 
-	Success(c.Controller, "Post")
+	Success(c.Request, "Post")
 }
 
 func (c *RoleController) Put() {
@@ -46,14 +46,14 @@ func (c *RoleController) Put() {
 	role := data.GetString("role")
 	glog.Debug(name, role)
 	if name == UNDEFIND_POLICY_NAME {
-		Fail(c.Controller, code.RESPONSE_ERROR)
+		Fail(c.Request, code.RESPONSE_ERROR)
 	} else {
 		err := model.UpdateRoleByRoleKey(role, name)
 		if err != nil {
-			Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
+			Fail(c.Request, code.RESPONSE_ERROR, err.Error())
 		}
 	}
-	Success(c.Controller, "修改成功")
+	Success(c.Request, "修改成功")
 }
 
 func (c *RoleController) Delete() {
@@ -62,9 +62,9 @@ func (c *RoleController) Delete() {
 
 	err := model.DeleteRole(role)
 	if err != nil {
-		Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
+		Fail(c.Request, code.RESPONSE_ERROR, err.Error())
 	}
-	Success(c.Controller, "Delete")
+	Success(c.Request, "Delete")
 }
 
 func (c *RoleController) SetRoleByUserName() {
@@ -73,5 +73,5 @@ func (c *RoleController) SetRoleByUserName() {
 	username := data.GetString("username")
 	model.SetRoleByUserName(username, roles)
 
-	Success(c.Controller, "success")
+	Success(c.Request, "success")
 }

@@ -27,11 +27,11 @@ func (c *PolicyController) Get() {
 
 	list.List, list.Total = model.GetPolicyList(page, limit, UNDEFIND_POLICY_NAME)
 
-	Success(c.Controller, list)
+	Success(c.Request, list)
 }
 
 func (c *PolicyController) Post() {
-	Success(c.Controller, "Post")
+	Success(c.Request, "Post")
 }
 
 func (c *PolicyController) Put() {
@@ -39,18 +39,18 @@ func (c *PolicyController) Put() {
 	name := data.GetString("name")
 	path := data.GetString("policy")
 	if name == UNDEFIND_POLICY_NAME {
-		Fail(c.Controller, code.RESPONSE_ERROR)
+		Fail(c.Request, code.RESPONSE_ERROR)
 	} else {
 		err := model.UpdatePolicyByFullPath(path, name)
 		if err != nil {
-			Fail(c.Controller, code.RESPONSE_ERROR, err.Error())
+			Fail(c.Request, code.RESPONSE_ERROR, err.Error())
 		}
 	}
-	Success(c.Controller, "修改成功")
+	Success(c.Request, "修改成功")
 }
 
 func (c *PolicyController) Delete() {
-	Success(c.Controller, "Delete")
+	Success(c.Request, "Delete")
 }
 
 func (c *PolicyController) GetPolicyByRole() {
@@ -64,7 +64,7 @@ func (c *PolicyController) GetPolicyByRole() {
 	list.List, list.Total = model.GetPolicyList(1, -1, "")
 	list.RolePolicyList = model.GetPolicyByRole(role)
 
-	Success(c.Controller, list)
+	Success(c.Request, list)
 }
 
 func (c *PolicyController) SetPolicyByRole() {
@@ -82,5 +82,5 @@ func (c *PolicyController) SetPolicyByRole() {
 
 	model.ReSetPolicy(role, routerMap)
 
-	Success(c.Controller, "success")
+	Success(c.Request, "success")
 }
