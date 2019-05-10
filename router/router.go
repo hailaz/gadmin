@@ -13,16 +13,17 @@ import (
 
 var routerMap = make(map[string]model.RolePolicy)
 
-func cors(r *ghttp.Request) {
+func showURL(r *ghttp.Request) {
 	glog.Debug(r.Request.RequestURI)
-	r.Response.CORSDefault()
+	//r.Response.CORSDefault()
 }
 
 func InitRouter(s *ghttp.Server) {
 
-	//s.BindHookHandler("/*", ghttp.HOOK_BEFORE_SERVE, cors)
+	s.BindHookHandler("/*", ghttp.HOOK_BEFORE_SERVE, showURL)
 	s.BindHandler("GET:/loginkey", api.GetLoginCryptoKey)
 	s.BindHandler("POST:/login", api.GfJWTMiddleware.LoginHandler)
+	s.BindHandler("GET:/refresh_token", api.GfJWTMiddleware.RefreshHandler)
 	InitV1(s)
 
 	model.ReSetPolicy("system", routerMap)

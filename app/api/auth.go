@@ -25,8 +25,8 @@ func init() {
 	authMiddleware, err := jwt.New(&jwt.GfJWTMiddleware{
 		Realm:           "test zone",
 		Key:             []byte("secret key"),
-		Timeout:         time.Minute * 5,
-		MaxRefresh:      time.Minute * 5,
+		Timeout:         time.Minute * 10,
+		MaxRefresh:      time.Minute * 10,
 		IdentityKey:     "username",              // 用户关机字
 		TokenLookup:     "header: Authorization", // 捕抓请求的指定数据
 		TokenHeadName:   "gadmin",                // token 头名称
