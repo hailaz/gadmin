@@ -21,23 +21,23 @@ var (
 // Initialization function,
 // rewrite this function to customized your own JWT settings.
 func init() {
-	//TokenLookup:     "header: Authorization, query: token, cookie: jwt",
 	authMiddleware, err := jwt.New(&jwt.GfJWTMiddleware{
-		Realm:           "test zone",
-		Key:             []byte("secret key"),
-		Timeout:         time.Minute * 10,
-		MaxRefresh:      time.Minute * 10,
-		IdentityKey:     "username",              // 用户关机字
-		TokenLookup:     "header: Authorization", // 捕抓请求的指定数据
-		TokenHeadName:   "gadmin",                // token 头名称
-		TimeFunc:        time.Now,
-		Authenticator:   Authenticator,   //登录验证
-		LoginResponse:   LoginResponse,   //登录返回token
-		RefreshResponse: RefreshResponse, //刷新token
-		Unauthorized:    Unauthorized,    //未登录返回
-		IdentityHandler: IdentityHandler, //返回数据给Authorizator
-		PayloadFunc:     PayloadFunc,     //将Authenticator返回的内容记录到jwt
-		Authorizator:    Authorizator,    //接收IdentityHandler数据并判断权限
+		Realm:                 "gf admin",
+		Key:                   []byte("secret key"),
+		Timeout:               time.Minute * 10,        //token有效时间
+		MaxRefresh:            time.Minute * 10,        //token刷新有效时间
+		IdentityKey:           "username",              // 用户关键字
+		TokenLookup:           "header: Authorization", // 捕抓请求的指定数据
+		TokenHeadName:         "gadmin1",               // token 头名称
+		TimeFunc:              time.Now,
+		Authenticator:         Authenticator,         //登录验证
+		LoginResponse:         LoginResponse,         //登录返回token
+		RefreshResponse:       RefreshResponse,       //刷新token
+		Unauthorized:          Unauthorized,          //未登录返回
+		IdentityHandler:       IdentityHandler,       //返回数据给Authorizator
+		PayloadFunc:           PayloadFunc,           //将Authenticator返回的内容记录到jwt
+		Authorizator:          Authorizator,          //接收IdentityHandler数据并判断权限
+		HTTPStatusMessageFunc: HTTPStatusMessageFunc, //错误处理
 	})
 	if err != nil {
 		glog.Fatal("JWT Error:" + err.Error())
@@ -90,6 +90,14 @@ func IdentityHandler(r *ghttp.Request) interface{} {
 // Unauthorized is used to define customized Unauthorized callback function.
 func Unauthorized(r *ghttp.Request, code int, message string) {
 	Fail(r, code, message)
+}
+
+func HTTPStatusMessageFunc(e error, r *ghttp.Request) string {
+	switch e.Error() {
+	case "Token is expired":
+		return "token超时"
+	}
+	return e.Error()
 }
 
 // LoginResponse is used to define customized login-successful callback function.

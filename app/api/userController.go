@@ -53,7 +53,12 @@ func (c *UserController) Post() {
 	if password != passwordconfirm {
 		Fail(c.Request, code.RESPONSE_ERROR, "输入密码不一致")
 	}
-	user := model.User{UserName: username, Password: password, NickName: nickname, Email: email, Phone: phone}
+	addu := c.GetUser()
+	var addUserId int64 = 0
+	if addu != nil {
+		addUserId = addu.Id
+	}
+	user := model.User{UserName: username, Password: password, NickName: nickname, Email: email, Phone: phone, AddUserId: addUserId}
 	uid, _ := user.Insert()
 	if uid > 0 {
 		Success(c.Request, "success")
