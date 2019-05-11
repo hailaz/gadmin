@@ -1,4 +1,4 @@
-###简要说明
+### 简要说明
 
 Demo：[gadmin](http://gadmin.xiao3.top)
 
@@ -10,8 +10,8 @@ Demo：[gadmin](http://gadmin.xiao3.top)
 
 ----
 
-###技术栈
-####后端
+### 技术栈
+#### 后端
 
 框架：GoFrame
 登录加密：RSA
@@ -19,12 +19,12 @@ Demo：[gadmin](http://gadmin.xiao3.top)
 API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
 ----
-####前端
+#### 前端
 框架：vue-element-admin
 
 ----
 ----
-###其它说明
+### 其它说明
 
 login
 登录需要先 get 请求/loginkey 获取 RSA 的加密公钥（单次有效），将密码使用 RSA-PKCS1v1.5 方式加密并使用 base64 编码
