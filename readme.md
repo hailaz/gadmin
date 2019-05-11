@@ -11,11 +11,15 @@ Demo：[gadmin](http://gadmin.xiao3.top)
 ----
 
 ### 技术栈
+
 #### 后端
 
 框架：GoFrame
+
 登录加密：RSA
+
 权限管理：[Casbin](https://github.com/casbin/casbin)的RBAC
+
 API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
 ----
@@ -27,7 +31,9 @@ API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 ### 其它说明
 
 login
+
 登录需要先 get 请求/loginkey 获取 RSA 的加密公钥（单次有效），将密码使用 RSA-PKCS1v1.5 方式加密并使用 base64 编码
+
 收到的数据
 
 ```js
@@ -44,10 +50,13 @@ login
 ```
 
 例如：
+
 使用 forge.js 进行加密数据
+
 https://raw.githubusercontent.com/loveiset/RSAForPostman/master/forge.js
 
 var publicKey = forge.pki.publicKeyFromPem(公钥);
+
 var encryptedText = forge.util.encode64(publicKey.encrypt(真实密码));
 
 最终提交的格式
