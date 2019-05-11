@@ -132,7 +132,7 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 	kid := data.GetString("kid")
 
 	if ck := common.GetCryptoKey(kid); ck != nil {
-		if gtime.Second()-ck.TimeStamp >= 5 {
+		if gtime.Second()-ck.TimeStamp >= 5 { //加密key超时时间
 			return nil, jwt.ErrFailedAuthentication
 		}
 		//glog.Debugfln("%v", ck.Id)

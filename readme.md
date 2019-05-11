@@ -1,33 +1,30 @@
-#readme
+###简要说明
 
-Demo：http://gadmin.xiao3.top
+Demo：[gadmin](http://gadmin.xiao3.top)
 
-后端使用
+后端使用框架：[GoFrame](https://github.com/gogf/gf)
 
-https://github.com/gogf/gf
+前端使用框架：[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
-前端使用
+前端项目地址：[https://github.com/hailaz/gadmin-vue](https://github.com/hailaz/gadmin-vue)
 
-https://github.com/PanJiaChen/vue-element-admin
+----
 
-fork 修改后
+###技术栈
+####后端
 
-https://github.com/hailaz/gadmin-vue
+框架：GoFrame
+登录加密：RSA
+权限管理：[Casbin](https://github.com/casbin/casbin)的RBAC
+API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
-后端技术栈
+----
+####前端
+框架：vue-element-admin
 
-gframe 框架
-
-登录使用 RSA 加密
-
-权限使用 casbin
-
-API 授权使用 JWT
-
-casbin RBAC
-https://github.com/casbin/casbin
-
-JWT json web token
+----
+----
+###其它说明
 
 login
 登录需要先 get 请求/loginkey 获取 RSA 的加密公钥（单次有效），将密码使用 RSA-PKCS1v1.5 方式加密并使用 base64 编码
@@ -35,14 +32,14 @@ login
 
 ```js
 {
-    "code":0,
-    "data":{
-        "kid":"BTNKI5TJP5PGNE83JP",
-        "cryptotype":"RSA-PKCS1v1.5",
-        "key":"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz101HTbyTYlVY8ID/SgR\ntH7FVKoT5wbnSpAPH7qoNb9zyEl4klvFAoJVWi5haatIG0EPvEmC+/mR05KN0SIe\nsOAeaq/l0v+8wY6VYlAI+sMp5NFNLQzczgvEPxy9404sxQWn8BOJ/tH+84yA23py\nJBiIWjRLLII9+t/R7rNM0TQ0Iu6T/BZfxv0QXuW5AU803CveEg0kE6/kpnNu1aNK\nb7p2gcBiVqGA36AwogqO6Rr0KXTEVxFFYspeVezLBkyY5g1ChWjor/kcr8jLttW4\nTzyiOLtDtAzdQUSg1ECGOTZnD/MYG4G7JT4KtSFlmAdTMn1+D8Jn2xTSYJDQA0iR\nnwIDAQAB\n-----END PUBLIC KEY-----\n",
-        "timestamp":1556261061
-    },
-    "msg":"success"
+  "code": 20000,
+  "data": {
+    "kid": "BU06PZLJPUNK90L44T",
+    "cryptotype": "RSA-PKCS1v1.5",
+    "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsAj30qPj3YT7n4bm2uyr\nglOugXyvv34k/kwHkrS/KlLNsvbbGbmAv8fMakuPxm64LKXjX/16+P5IQgNuqWjg\nqoqllB+9Ex3fftEa+YE9hxIlkfBVrhV3SFxJe1bR2QbdgN/tNmnrmwjxCpgeyrCM\nKE/ifAkImgNfC6KCavY7idklRMv/Xji53H1TUoarN2kHFfde5NGfd/Z+9GoB633U\nWi6zJ6vMhinlCaPVQlBHHwIRqMlzC3CWXR3Tx42o4GgPktkZjWK0+DqUUhF7amXC\n/diypzSBsVmCEn68U52byW9vSHiWlRA0N9/stHCZ5M3NcnnZF9JV6XcYjlgHj3ZD\nEwIDAQAB\n-----END PUBLIC KEY-----\n",
+    "timestamp": 1557542458
+  },
+  "message": "success"
 }
 ```
 

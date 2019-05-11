@@ -21,9 +21,9 @@ func showURL(r *ghttp.Request) {
 func InitRouter(s *ghttp.Server) {
 
 	s.BindHookHandler("/*", ghttp.HOOK_BEFORE_SERVE, showURL)
-	s.BindHandler("GET:/loginkey", api.GetLoginCryptoKey)
-	s.BindHandler("POST:/login", api.GfJWTMiddleware.LoginHandler)
-	s.BindHandler("GET:/refresh_token", api.GfJWTMiddleware.RefreshHandler)
+	s.BindHandler("GET:/loginkey", api.GetLoginCryptoKey)                   //获取登录加密公钥
+	s.BindHandler("POST:/login", api.GfJWTMiddleware.LoginHandler)          //登录
+	s.BindHandler("GET:/refresh_token", api.GfJWTMiddleware.RefreshHandler) //刷新token
 	InitV1(s)
 
 	model.ReSetPolicy("system", routerMap)
@@ -31,8 +31,8 @@ func InitRouter(s *ghttp.Server) {
 
 // authHook is the HOOK function implements JWT logistics.
 func authHook(r *ghttp.Request) {
-	r.Response.CORSDefault()
-	api.GfJWTMiddleware.MiddlewareFunc()(r)
+	r.Response.CORSDefault()                //开启跨域
+	api.GfJWTMiddleware.MiddlewareFunc()(r) //鉴权中间件
 }
 
 // InitV1 初始化V1
@@ -63,7 +63,7 @@ func InitV1(s *ghttp.Server) {
 	})
 }
 
-// BindGroup path string,description
+// BindGroup 绑定分组路由
 //
 // createTime:2019年04月29日 16:45:55
 // author:hailaz
