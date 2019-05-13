@@ -23,7 +23,7 @@ type BaseResult struct {
 	Data    interface{} `json:"data"`
 }
 
-// Response description
+// Response API返回
 //
 // createTime:2019年04月25日 11:32:47
 // author:hailaz
@@ -32,7 +32,7 @@ func Response(r *ghttp.Request, rs BaseResult) {
 	r.ExitAll()
 }
 
-// Success description
+// Success 返回成功
 //
 // createTime:2019年04月25日 11:41:44
 // author:hailaz
@@ -40,7 +40,7 @@ func Success(r *ghttp.Request, data interface{}) {
 	Response(r, BaseResult{Code: code.RESPONSE_SUCCESS, Message: "success", Data: data})
 }
 
-// Fail description
+// Fail 返回失败
 //
 // createTime:2019年04月25日 11:43:34
 // author:hailaz
@@ -53,6 +53,10 @@ func Fail(r *ghttp.Request, errCode int, msg ...string) {
 
 }
 
+// funcName 获取当前用户
+//
+// createTime:2019年05月13日 10:01:17
+// author:hailaz
 func (c *BaseController) GetUser() *model.User {
 	claims := jwt.ExtractClaims(c.Request)
 	user, _ := model.GetUserByName(claims["username"].(string))

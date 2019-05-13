@@ -22,13 +22,17 @@ const (
 	ADMIN_DEFAULT_PASSWORD = "123"   //超级管理员默认密码
 )
 
+// InitModel 初始化数据模型
+//
+// createTime:2019年05月13日 09:47:08
+// author:hailaz
 func InitModel() {
 	defDB = g.DB()
 	initUser()
 	initCasbin()
 }
 
-// initUser description
+// initUser 初始化用户
 //
 // createTime:2019年04月23日 14:57:23
 // author:hailaz
@@ -45,7 +49,7 @@ func initUser() {
 	admin.Insert()
 }
 
-// initCasbin description
+// initCasbin 初始化Casbin
 //
 // createTime:2019年04月23日 14:45:20
 // author:hailaz
@@ -59,7 +63,7 @@ func initCasbin() {
 
 }
 
-// GetDB description
+// GetDB 获取默认DB
 //
 // createTime:2019年04月23日 11:53:21
 // author:hailaz

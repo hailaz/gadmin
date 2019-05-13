@@ -63,7 +63,7 @@ func GetPolicyList(page, limit int, defaultname string) ([]Policy, int) {
 	return policyList, total
 }
 
-// GetPolicyByRole description
+// GetPolicyByRole 根据角色获取权限
 //
 // createTime:2019年05月07日 11:35:33
 // author:hailaz
@@ -79,7 +79,7 @@ func GetPolicyByRole(role string) []Policy {
 	return policyList
 }
 
-// GetAllPolicy description
+// GetAllPolicy 获取所有权限名称
 //
 // createTime:2019年04月30日 10:20:50
 // author:hailaz
@@ -87,7 +87,7 @@ func GetAllPolicy() (gdb.Result, error) {
 	return defDB.Table("policy_name").All()
 }
 
-// GetPolicyByFullPath description
+// GetPolicyByFullPath 根据权限全路径获取权限
 //
 // createTime:2019年05月06日 15:53:08
 // author:hailaz
@@ -97,7 +97,7 @@ func GetPolicyByFullPath(path string) (PolicyName, error) {
 	return obj, err
 }
 
-// UpdatePolicyByFullPath description
+// UpdatePolicyByFullPath 更新权限信息
 //
 // createTime:2019年05月06日 15:47:35
 // author:hailaz
@@ -127,7 +127,7 @@ func UpdatePolicyByFullPath(path, name string) error {
 	return nil
 }
 
-// ReSetPolicy 更新路由
+// ReSetPolicy 更新路由权限
 //
 // createTime:2019年04月29日 17:30:26
 // author:hailaz

@@ -120,7 +120,7 @@ func (c *UserController) Delete() {
 	if err != nil {
 		Fail(c.Request, code.RESPONSE_ERROR, err.Error())
 	}
-	if user.UserName == "admin" {
+	if user.UserName == model.ADMIN_NAME {
 		Fail(c.Request, code.RESPONSE_ERROR, "无权限")
 	}
 	res, _ := u.DeleteById(id)

@@ -56,12 +56,6 @@ func GetLoginCryptoKey(r *ghttp.Request) {
 	Success(r, ck)
 }
 
-// PayloadFunc is a callback function that will be called during login.
-// Using this function it is possible to add additional payload data to the webtoken.
-// The data is then made available during requests via c.Get("JWT_PAYLOAD").
-// Note that the payload is not encrypted.
-// The attributes mentioned on jwt.io can't be used as keys for the map.
-// Optional, by default no additional data will be set.
 func PayloadFunc(data interface{}) jwt.MapClaims {
 	claims := jwt.MapClaims{}
 	params := data.(map[string]interface{})
@@ -122,9 +116,10 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 	Success(r, tk)
 }
 
-// Authenticator is used to validate login parameters.
-// It must return user data as user identifier, it will be stored in Claim Array.
-// Check error (e) to determine the appropriate error message.
+// Authenticator 登录验证
+//
+// createTime:2019年05月13日 10:00:22
+// author:hailaz
 func Authenticator(r *ghttp.Request) (interface{}, error) {
 	data := r.GetJson()
 	name := data.GetString("username")

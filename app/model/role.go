@@ -54,7 +54,7 @@ func GetRoleList(page, limit int, defaultname string) ([]Role, int) {
 	return roleList, total
 }
 
-// GetRoleByUserName description
+// GetRoleByUserName 根据用户名获取对应角色
 //
 // createTime:2019年05月08日 15:08:19
 // author:hailaz
@@ -68,7 +68,7 @@ func GetRoleByUserName(userName string) []Role {
 	return roleList
 }
 
-// GetAllRole description
+// GetAllRole 获取所有角色名称
 //
 // createTime:2019年04月30日 10:20:50
 // author:hailaz
@@ -76,7 +76,7 @@ func GetAllRole() (gdb.Result, error) {
 	return defDB.Table("role_name").All()
 }
 
-// GetRoleByRoleKey description
+// GetRoleByRoleKey 根据角色唯一键获取角色
 //
 // createTime:2019年05月06日 15:53:08
 // author:hailaz
@@ -86,7 +86,7 @@ func GetRoleByRoleKey(role string) (RoleName, error) {
 	return obj, err
 }
 
-// UpdateRoleByRoleKey description
+// UpdateRoleByRoleKey 更新角色信息
 //
 // createTime:2019年05月06日 15:47:35
 // author:hailaz
@@ -116,7 +116,7 @@ func UpdateRoleByRoleKey(role, name string) error {
 	return nil
 }
 
-// AddRole description
+// AddRole 添加角色
 //
 // createTime:2019年05月07日 10:45:04
 // author:hailaz
@@ -140,7 +140,7 @@ func AddRole(role, name string) error {
 	return errors.New("add fail")
 }
 
-// DeleteRole description
+// DeleteRole 删除角色
 //
 // createTime:2019年05月07日 11:12:59
 // author:hailaz
@@ -158,7 +158,7 @@ func DeleteRole(role string) error {
 	return errors.New("delete fail")
 }
 
-// SetRoleByUserName description
+// SetRoleByUserName 设置用户角色
 //
 // createTime:2019年05月08日 15:22:05
 // author:hailaz

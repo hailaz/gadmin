@@ -18,6 +18,10 @@ func showURL(r *ghttp.Request) {
 	//r.Response.CORSDefault()
 }
 
+// InitRouter 初始化路由
+//
+// createTime:2019年05月13日 09:32:58
+// author:hailaz
 func InitRouter(s *ghttp.Server) {
 
 	s.BindHookHandler("/*", ghttp.HOOK_BEFORE_SERVE, showURL)
@@ -29,6 +33,10 @@ func InitRouter(s *ghttp.Server) {
 	model.ReSetPolicy("system", routerMap)
 }
 
+// authHook 鉴权钩子
+//
+// createTime:2019年05月13日 09:33:58
+// author:hailaz
 // authHook is the HOOK function implements JWT logistics.
 func authHook(r *ghttp.Request) {
 	r.Response.CORSDefault()                //开启跨域

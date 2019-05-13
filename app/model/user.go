@@ -36,7 +36,7 @@ type UserInfo struct {
 	Name         string   `json:"name"`
 }
 
-// GetUserByPageLimt description
+// GetUserByPageLimt 获取用户
 //
 // createTime:2019年05月07日 16:11:41
 // author:hailaz
@@ -70,15 +70,15 @@ func GetUserByPageLimt(page, limit int) ([]UserOut, int) {
 
 }
 
-// GetUserList description
+// GetAllUser 获取所有用户
 //
 // createTime:2019年04月30日 10:20:50
 // author:hailaz
-func GetUserList() (gdb.Result, error) {
+func GetAllUser() (gdb.Result, error) {
 	return defDB.Table("user").All()
 }
 
-// GetUserByName description
+// GetUserByName 根据用户名获取用户
 //
 // createTime:2019年04月23日 17:14:22
 // author:hailaz
@@ -99,7 +99,7 @@ func EncryptPassword(data string) string {
 	return gmd5.EncryptString(data + ENCRYPTMD5)
 }
 
-// UpdateUserById description
+// UpdateUserById 更新用户
 //
 // createTime:2019年05月08日 14:28:18
 // author:hailaz
@@ -122,14 +122,14 @@ func UpdateUserById(id int64, udmap gdb.Map) error {
 //     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
 //     name: 'Super Admin'
 //   }
-// GetUserInfo description
+// GetUserInfo 获取用户信息
 //
 // createTime:2019年05月08日 16:53:24
 // author:hailaz
 func (u *User) GetUserInfo() UserInfo {
 	info := UserInfo{}
-	if u.UserName == "admin" {
-		info.Roles = []string{"admin"}
+	if u.UserName == ADMIN_NAME {
+		info.Roles = []string{ADMIN_NAME}
 	} else {
 		info.Roles = Enforcer.GetRolesForUser(u.UserName)
 	}
