@@ -28,11 +28,7 @@ func main() {
 	// 初始化路由
 	router.InitRouter(s)
 
-	port := g.Config().GetInt("port")
-	if port == 0 {
-		port = 8080
-	}
-	s.SetPort(port)
+	s.SetPort(g.Config().GetInt("port", 8080))
 	s.Run()
 
 }

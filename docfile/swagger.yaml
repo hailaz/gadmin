@@ -1,0 +1,406 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: gadmin 接口文档
+  description: gadmin 接口文档
+schemes:
+  - http
+host: localhost:8199
+#basePath: /v1
+#
+paths:
+  /loginkey:
+    get:
+      summary: 获取登录密码加密密钥
+      description: |
+        请求一个加密密钥，返回的内容包含密钥id（kid）、加密类型（cryptotype）、加密密钥（key）。
+        ```js
+        {
+          "code": 20000,
+          "data": {
+            "kid": "BU06PZLJPUNK90L44T",
+            "cryptotype": "RSA-PKCS1v1.5",
+            "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsAj30qPj3YT7n4bm2uyr\nglOugXyvv34k/kwHkrS/KlLNsvbbGbmAv8fMakuPxm64LKXjX/16+P5IQgNuqWjg\nqoqllB+9Ex3fftEa+YE9hxIlkfBVrhV3SFxJe1bR2QbdgN/tNmnrmwjxCpgeyrCM\nKE/ifAkImgNfC6KCavY7idklRMv/Xji53H1TUoarN2kHFfde5NGfd/Z+9GoB633U\nWi6zJ6vMhinlCaPVQlBHHwIRqMlzC3CWXR3Tx42o4GgPktkZjWK0+DqUUhF7amXC\n/diypzSBsVmCEn68U52byW9vSHiWlRA0N9/stHCZ5M3NcnnZF9JV6XcYjlgHj3ZD\nEwIDAQAB\n-----END PUBLIC KEY-----\n",
+            "timestamp": 1557542458
+          },
+          "message": "success"
+        }
+      tags:
+        - Login
+      parameters:
+      responses:
+        200:
+          $ref: '#/responses/LoginKey'
+  /login:
+    post:
+      summary: 登录
+      description: |
+        登录需要先 get 请求/loginkey 获取 RSA 的加密公钥（单次有效，并密钥有时效），将密码使用 RSA-PKCS1v1.5 方式加密并使用 base64 编码
+        
+        使用 forge.js 进行加密数据
+
+        https://raw.githubusercontent.com/loveiset/RSAForPostman/master/forge.js
+
+        var publicKey = forge.pki.publicKeyFromPem(公钥);
+
+        var encryptedText = forge.util.encode64(publicKey.encrypt(真实密码));
+
+        最终提交的格式
+
+        ```
+        Content-Type: application/json
+        POST
+        {
+            "username":"admin",
+            "password":encryptedText,
+            "kid":"BTNK5IF7DYC8287814"//公钥的 id
+        }
+        ```
+
+      tags:
+        - Login
+      parameters:
+        - name: body
+          in: body
+          description: 登录数据
+          schema:
+            required:
+              - kid
+              - password
+              - username
+            properties:
+              kid:
+                type: string
+              password:
+                type: string
+              username:
+                type: string
+      responses:
+        200:
+          $ref: '#/responses/Login'
+  /refresh_token:
+    get:
+      summary: 刷新token
+      description: t
+      tags:
+        - Login
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/responses/Login'
+  /user/logout:
+    get:
+      summary: 退出登录
+      description: t
+      tags:
+        - User
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/responses/Success'
+  /user/info:
+    get:
+      summary: 获取用户信息
+      description: t
+      tags:
+        - User
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/responses/UserInfo'
+  /user:
+    get:
+      summary: 获取用户列表
+      description: 获取用户列表
+      tags:
+        - User
+      security:
+        - Authorization: []
+      parameters:
+       - $ref: "#/parameters/page"
+       - $ref: "#/parameters/limit"
+      responses:
+        200:
+          $ref: '#/responses/UserList'
+    post:
+      summary: 添加用户
+      description: 添加用户
+      tags:
+        - User
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/UserPost"
+      responses:
+        200:
+          $ref: '#/responses/Success'
+    put:
+      summary: 修改用户
+      description: 修改用户
+      tags:
+        - User
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/UserPut"
+      responses:
+        200:
+          $ref: '#/responses/Login'
+    delete:
+      summary: 删除用户
+      description: 删除用户
+      tags:
+        - User
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            required:
+              - id
+            properties:
+              id:
+                type: integer
+      responses:
+        200:
+          $ref: '#/responses/Success'
+
+  /role:
+    get:
+      summary: 刷新token
+      description: t
+      tags:
+        - Role
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/responses/Login'
+  /role/byuser:
+    get:
+      summary: 刷新token
+      description: t
+      tags:
+        - Role
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/responses/Login'
+  /policy:
+    get:
+      summary: 刷新token
+      description: t
+      tags:
+        - Policy
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/responses/Login'
+  /policy/byrole:
+    get:
+      summary: 刷新token
+      description: t
+      tags:
+        - Policy
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/responses/Login'
+
+
+definitions:
+  Result:
+    properties:
+      code:
+        type: integer
+        format: int
+        default: 2000
+      message:
+        type: string
+      data:
+        type: object
+  Success:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+
+  Error:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+  UserBase:
+    properties:
+      nick_name:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+  User:
+    allOf:
+    - $ref: '#/definitions/UserBase'
+    - type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_name:
+          type: string
+        Introduction:
+          type: string
+        status:
+          type: integer
+        age:
+          type: integer
+        add_user_id:
+          type: integer
+          readOnly: true
+        add_time:
+          type: string
+          format: date-time
+          readOnly: true
+        update_time:
+          type: string
+          format: date-time
+          readOnly: true
+  UserPost:
+    allOf:
+    - $ref: '#/definitions/UserPut'
+    - type: object
+      properties:
+        user_name:
+          type: string
+  UserPut:
+    allOf:
+    - $ref: '#/definitions/UserBase'
+    - type: object
+      properties:
+        password:
+          description: 添加时必填，修改时选填。
+          type: string
+          format: password
+        passwordconfirm:
+          description: 添加时必填，修改时选填。
+          type: string
+          format: password
+  Users:
+    type: array
+    items:
+      $ref: "#/definitions/User"
+
+
+parameters:
+  page:
+    name: page
+    in: query
+    description: Page number
+    type: integer
+  limit:
+    name: limit
+    in: query
+    description: limit
+    type: integer
+
+#响应
+responses:
+  Success:
+    description: Seccess
+    schema:
+      $ref: '#/definitions/Success'
+  Error500:
+    description: An unexpected error occured.
+    schema:
+      $ref: '#/definitions/Error'
+  LoginKey:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            cryptotype:
+              type: string
+            key:
+              type: string
+            kid:
+              type: string
+            timestamp:
+              type: string
+  Login:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            expire:
+              type: string
+            token:
+              type: string
+  UserInfo:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            avatar:
+              type: string
+            introduction:
+              type: string
+            name:
+              type: string
+            roles:
+              type: array
+              items:
+                type: string
+  UserList:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            total:
+              type: integer
+            items:
+              $ref: "#/definitions/Users"
+
+
+
+
+
+#标签
+tags:
+  - name: Login
+    description: 登录相关
+  - name: User
+    description: 用户相关
+  - name: Role
+    description: 角色相关
+  - name: Policy
+    description: 权限相关
+
+#API鉴权
+securityDefinitions:
+  Authorization:
+    name: Authorization
+    type: apiKey
+    in: header

@@ -3,6 +3,9 @@ package router
 import (
 	"fmt"
 
+	"github.com/gogf/gf/g"
+	"github.com/gogf/gf/g/encoding/gparser"
+
 	"github.com/gogf/gf/g/net/ghttp"
 	"github.com/gogf/gf/g/os/glog"
 	"github.com/gogf/gf/g/util/gconv"
@@ -23,6 +26,7 @@ func showURL(r *ghttp.Request) {
 // createTime:2019年05月13日 09:32:58
 // author:hailaz
 func InitRouter(s *ghttp.Server) {
+	initApiDocRouter(s)
 
 	s.BindHookHandler("/*", ghttp.HOOK_BEFORE_SERVE, showURL)
 	s.BindHandler("GET:/loginkey", api.GetLoginCryptoKey)                   //获取登录加密公钥
@@ -39,7 +43,8 @@ func InitRouter(s *ghttp.Server) {
 // author:hailaz
 // authHook is the HOOK function implements JWT logistics.
 func authHook(r *ghttp.Request) {
-	r.Response.CORSDefault()                //开启跨域
+	r.Response.CORSDefault() //开启跨域
+	//r.Response.Header().Set("Access-Control-Allow-Origin", "*")
 	api.GfJWTMiddleware.MiddlewareFunc()(r) //鉴权中间件
 }
 
@@ -103,4 +108,33 @@ func BindGroup(s *ghttp.Server, path string, items []ghttp.GroupItem) {
 // author:hailaz
 func addPolicy(role, path, atc string) {
 	routerMap[fmt.Sprintf("%v %v %v", role, path, atc)] = model.RolePolicy{Role: role, Path: path, Atc: atc}
+}
+
+// initApiDocRouter 初始化api文档路由
+//
+// createTime:2019年05月14日 09:05:26
+// author:hailaz
+func initApiDocRouter(s *ghttp.Server) {
+	s.BindHandler("/swagger.{mime}", func(r *ghttp.Request) {
+		r.Response.CORSDefault()
+		r.Response.Header().Set("Access-Control-Allow-Origin", "*")
+		//r.Response.Writeln(r.Get("mime"))
+		p, err := gparser.Load("docfile/swagger.yaml")
+		if err != nil {
+			r.Response.Writeln(err.Error())
+		}
+
+		switch r.Get("mime") {
+		case "json":
+			j, _ := p.ToJson()
+			r.Response.WriteJson(j)
+		default:
+			y, _ := p.ToYaml()
+			r.Response.Write(y)
+		}
+
+	})
+	s.BindHandler("/swagger", func(r *ghttp.Request) {
+		r.Response.RedirectTo("https://petstore.swagger.io/?url=http://localhost:" + g.Config().GetString("port", 8080) + "/swagger.yaml")
+	})
 }

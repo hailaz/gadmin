@@ -28,7 +28,7 @@ func init() {
 		MaxRefresh:            time.Minute * 10,        //token刷新有效时间
 		IdentityKey:           "username",              // 用户关键字
 		TokenLookup:           "header: Authorization", // 捕抓请求的指定数据
-		TokenHeadName:         "gadmin1",               // token 头名称
+		TokenHeadName:         "gadmin",                // token 头名称
 		TimeFunc:              time.Now,
 		Authenticator:         Authenticator,         //登录验证
 		LoginResponse:         LoginResponse,         //登录返回token
@@ -87,6 +87,7 @@ func Unauthorized(r *ghttp.Request, code int, message string) {
 }
 
 func HTTPStatusMessageFunc(e error, r *ghttp.Request) string {
+	glog.Debug(e.Error())
 	switch e.Error() {
 	case "Token is expired":
 		return "token超时"
