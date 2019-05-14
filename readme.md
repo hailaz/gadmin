@@ -28,8 +28,10 @@ API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
 ----
 ----
-### 其它说明
+### 如何访问接口文档？
 
-启动后访问[http://localhost:8199/swagger](http://localhost:8199/swagger)显示接口文档。
+访问<a href="https://petstore.swagger.io/?url=https://raw.githubusercontent.com/hailaz/gadmin/master/docfile/swagger.yaml" target="_blank">https://petstore.swagger.io</a>查看。
 
-或将docfile目录下的swagger.yaml文件内容复制到[swagger-editor](http://editor.swagger.io/)查看。
+或者启动项目后访问<a href="http://localhost:8199/swagger" target="_blank">http://localhost:8199/swagger</a>显示接口文档。
+
+或将docfile目录下的swagger.yaml文件内容复制到<a href="http://editor.swagger.io/" target="_blank">http://editor.swagger.io/</a>查看。
