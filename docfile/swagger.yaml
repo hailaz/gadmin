@@ -9,6 +9,7 @@ host: localhost:8199
 #basePath: /v1
 #
 paths:
+#登录相关
   /loginkey:
     get:
       summary: 获取登录密码加密密钥
@@ -89,6 +90,7 @@ paths:
       responses:
         200:
           $ref: '#/responses/Login'
+#用户相关
   /user/logout:
     get:
       summary: 退出登录
@@ -174,51 +176,147 @@ paths:
       responses:
         200:
           $ref: '#/responses/Success'
-
+#角色相关
   /role:
     get:
-      summary: 刷新token
-      description: t
+      summary: 获取角色列表
+      description: 获取角色列表
       tags:
         - Role
       security:
         - Authorization: []
+      parameters:
+        - $ref: "#/parameters/page"
+        - $ref: "#/parameters/limit"
+        - name: username
+          in: query
+          description: 用户名（编辑用户角色的时候使用这个参数，不使用分页参数）
+          type: string
+      responses:
+        200:
+          $ref: '#/responses/RoleList'
+    post:
+      summary: 添加角色
+      description: 添加角色
+      tags:
+        - Role
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/Role"
+      responses:
+        200:
+          $ref: '#/responses/Success'
+    put:
+      summary: 修改角色
+      description: 修改角色
+      tags:
+        - Role
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/Role"
       responses:
         200:
           $ref: '#/responses/Login'
+    delete:
+      summary: 删除角色
+      description: 删除角色
+      tags:
+        - Role
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/Role"
+      responses:
+        200:
+          $ref: '#/responses/Success'
   /role/byuser:
-    get:
-      summary: 刷新token
-      description: t
+    put:
+      summary: 获取角色权限
+      description: 获取角色权限
       tags:
         - Role
       security:
         - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/UserRolePut"
       responses:
         200:
-          $ref: '#/responses/Login'
+          $ref: '#/responses/Success'
+#权限相关
   /policy:
     get:
-      summary: 刷新token
-      description: t
+      summary: 获取用户列表
+      description: 获取用户列表
       tags:
         - Policy
       security:
         - Authorization: []
+      parameters:
+       - $ref: "#/parameters/page"
+       - $ref: "#/parameters/limit"
       responses:
         200:
-          $ref: '#/responses/Login'
+          $ref: '#/responses/PolicyList'
+    put:
+      summary: 修改用户
+      description: 修改用户
+      tags:
+        - Policy
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/Policy"
+      responses:
+        200:
+          $ref: '#/responses/Success'
   /policy/byrole:
     get:
-      summary: 刷新token
-      description: t
+      summary: 获取角色权限
+      description: 获取角色权限
       tags:
         - Policy
       security:
         - Authorization: []
+      parameters:
+       - name: role
+         in: query
+         description: 角色名
+         type: string
       responses:
         200:
-          $ref: '#/responses/Login'
+          $ref: '#/responses/RolePolicyList'
+    put:
+      summary: 设置角色权限
+      description: 设置角色权限
+      tags:
+        - Policy
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/RolePolicyPut"
+      responses:
+        200:
+          $ref: '#/responses/Success'
 
 
 definitions:
@@ -300,7 +398,44 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/User"
-
+  UserRolePut:
+    properties:
+      roles:
+        type: array
+        items:
+          type: string
+      username:
+        type: string
+#Role
+  Role:
+    properties:
+      name:
+        type: string
+      role:
+        type: string
+  Roles:
+    type: array
+    items:
+      $ref: "#/definitions/Role"
+  RolePolicyPut:
+    properties:
+      policys:
+        type: array
+        items:
+          type: string
+      role:
+        type: string
+#Policy
+  Policy:
+    properties:
+      name:
+        type: string
+      policy:
+        type: string
+  Policys:
+    type: array
+    items:
+      $ref: "#/definitions/Policy"
 
 parameters:
   page:
@@ -383,7 +518,46 @@ responses:
             items:
               $ref: "#/definitions/Users"
 
-
+  RoleList:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            total:
+              type: integer
+            items:
+              $ref: "#/definitions/Roles"
+            role_items:
+              $ref: "#/definitions/Roles"
+  RolePolicyList:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            total:
+              type: integer
+            all_policy_items:
+              $ref: "#/definitions/Policys"
+            role_policy_items:
+              $ref: "#/definitions/Policys"
+  PolicyList:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            total:
+              type: integer
+            items:
+              $ref: "#/definitions/Policys"
 
 
 
