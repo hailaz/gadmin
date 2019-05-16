@@ -11,23 +11,24 @@
  Target Server Version : 50542
  File Encoding         : 65001
 
- Date: 16/05/2019 15:07:50
+ Date: 16/05/2019 15:57:56
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for role_name
+-- Table structure for menu_mate
 -- ----------------------------
-DROP TABLE IF EXISTS `role_name`;
-CREATE TABLE `role_name`  (
+DROP TABLE IF EXISTS `menu_mate`;
+CREATE TABLE `menu_mate`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' COMMENT '角色key',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '角色名',
-  `descrption` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '描述',
+  `menu_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单关键名',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
+  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
+  `nocache` tinyint(1) NULL DEFAULT 0 COMMENT '是否缓存',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `role_key_index`(`role_key`) USING BTREE
+  UNIQUE INDEX `key_name`(`menu_name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;

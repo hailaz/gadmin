@@ -9,21 +9,20 @@ import (
 // User 表名：user
 // 由数据库自动生成的结构体
 type User struct {
-	Id           int64  `json:"id"`             //
-	Status       int    `json:"status"`         //
-	UserName     string `json:"user_name"`      //
-	NickName     string `json:"nick_name"`      //
-	Password     string `json:"password"`       //
-	Email        string `json:"email"`          //
-	Phone        string `json:"phone"`          //
-	Sex          int    `json:"sex"`            //
-	Age          int    `json:"age"`            //
-	AddTime      string `json:"add_time"`       //
-	UpdateTime   string `json:"update_time"`    //
-	AddUserId    int64  `json:"add_user_id"`    //
-	ThirdPartyId int64  `json:"third_party_id"` //
-	Introduction string `json:"Introduction"`   //
-	Avatar       string `json:"avatar"`         //
+	Id           int64  `json:"id"`           //
+	Status       int    `json:"status"`       //状态
+	UserName     string `json:"user_name"`    //用户名
+	NickName     string `json:"nick_name"`    //昵称
+	Password     string `json:"password"`     //密码
+	Email        string `json:"email"`        //邮箱
+	Phone        string `json:"phone"`        //手机号
+	Sex          int    `json:"sex"`          //性别
+	Age          int    `json:"age"`          //年龄
+	AddTime      string `json:"add_time"`     //添加时间
+	UpdateTime   string `json:"update_time"`  //修改时间
+	AddUserId    int64  `json:"add_user_id"`  //操作用户
+	Introduction string `json:"Introduction"` //介绍
+	Avatar       string `json:"avatar"`       //头像
 }
 
 // TableName 获取表名

@@ -8,9 +8,9 @@ import (
 // 由数据库自动生成的结构体
 type RoleName struct {
 	Id         int64  `json:"id"`         //
-	RoleKey    string `json:"role_key"`   //
-	Name       string `json:"name"`       //
-	Descrption string `json:"descrption"` //
+	RoleKey    string `json:"role_key"`   //角色key
+	Name       string `json:"name"`       //角色名
+	Descrption string `json:"descrption"` //描述
 }
 
 // TableName 获取表名
