@@ -135,6 +135,6 @@ func initApiDocRouter(s *ghttp.Server) {
 
 	})
 	s.BindHandler("/swagger", func(r *ghttp.Request) {
-		r.Response.RedirectTo("https://petstore.swagger.io/?url=http://localhost:" + g.Config().GetString("port", 8080) + "/swagger.yaml")
+		r.Response.RedirectTo("https://petstore.swagger.io/?url=http://localhost:" + g.Config().GetString("port", "8080") + "/swagger.yaml")
 	})
 }
