@@ -13,11 +13,10 @@ type Menu struct {
 	Redirect   string   `json:"redirect"`    //重定向地址
 	Name       string   `json:"name"`        //唯一关键名
 	Hidden     bool     `json:"hidden"`      //是否隐藏
-	Alwaysshow bool     `json:"alwaysShow"`  //是否常显示
-	Enable     bool     `json:"enable"`      //是否有效
+	Alwaysshow bool     `json:"alwaysshow"`  //是否常显示
 	Sort       int      `json:"sort"`        //排序
 	ParentName string   `json:"parent_name"` //父菜级关键名
-	MenuMate   MenuMate `json:"mate"`
+	MenuMeta   MenuMeta `json:"meta"`
 }
 
 // TableName 获取表名

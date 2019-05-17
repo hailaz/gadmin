@@ -30,6 +30,7 @@ func InitModel() {
 	defDB = g.DB()
 	initUser()
 	initCasbin()
+	initMenu()
 }
 
 // initUser 初始化用户
@@ -47,6 +48,72 @@ func initUser() {
 		Password: ADMIN_DEFAULT_PASSWORD,
 	}
 	admin.Insert()
+}
+
+// initMenu 初始化菜单数据
+//
+// createTime:2019年05月16日 15:39:54
+// author:hailaz
+func initMenu() {
+	InsertMenuWithMeta(gdb.List{
+		{
+			"name":        "user",
+			"menu_path":   "/user",
+			"component":   "layout/Layout",
+			"redirect":    "/user/list",
+			"sort":        "0",
+			"parent_name": "",
+			"meta": gdb.Map{
+				"title":   "user",
+				"icon":    "user",
+				"noCache": 0},
+		},
+		{
+			"name":        "userList",
+			"menu_path":   "list",
+			"component":   "user/user",
+			"sort":        "0",
+			"parent_name": "user",
+			"meta": gdb.Map{
+				"title":   "userList",
+				"icon":    "",
+				"noCache": 0},
+		},
+		{
+			"name":        "roleList",
+			"menu_path":   "/role/list",
+			"component":   "user/role",
+			"sort":        "1",
+			"parent_name": "user",
+			"meta": gdb.Map{
+				"title":   "roleList",
+				"icon":    "",
+				"noCache": 0},
+		},
+		{
+			"name":        "policyList",
+			"menu_path":   "/policy/list",
+			"component":   "user/policy",
+			"sort":        "2",
+			"parent_name": "user",
+			"meta": gdb.Map{
+				"title":   "policyList",
+				"icon":    "",
+				"noCache": 0},
+		},
+		{
+			"name":        "menuList",
+			"menu_path":   "/menu/list",
+			"component":   "user/menu",
+			"sort":        "3",
+			"parent_name": "user",
+			"meta": gdb.Map{
+				"title":   "menuList",
+				"icon":    "",
+				"noCache": 0},
+		},
+	})
+
 }
 
 // initCasbin 初始化Casbin

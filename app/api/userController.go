@@ -20,6 +20,14 @@ func (c *UserController) Info() {
 	Fail(c.Request, code.RESPONSE_ERROR, "获取用户信息失败")
 }
 
+func (c *UserController) Menu() {
+	u := c.GetUser()
+	if u != nil {
+		Success(c.Request, model.GetMenuByUserName(u.UserName))
+	}
+	Fail(c.Request, code.RESPONSE_ERROR, "获取用户菜单失败")
+}
+
 func (c *UserController) Logout() {
 	Success(c.Request, "success")
 }

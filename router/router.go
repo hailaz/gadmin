@@ -59,12 +59,16 @@ func InitV1(s *ghttp.Server) {
 	userCtrl := new(api.UserController)
 	roleCtrl := new(api.RoleController)
 	policyCtrl := new(api.PolicyController)
+	menuCtrl := new(api.MenuController)
 
 	// user
 	BindGroup(s, "/v1", []ghttp.GroupItem{
+		//menu
+		{"REST", "/menu", menuCtrl},
 		// 用户
 		{"POST", "/user/logout", userCtrl, "Logout", "false"},
 		{"GET", "/user/info", userCtrl, "Info", "false"},
+		{"GET", "/user/menu", userCtrl, "Menu", "false"},
 		{"REST", "/user", userCtrl},
 		// 角色
 		{"REST", "/role", roleCtrl},

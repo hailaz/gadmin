@@ -18,10 +18,10 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for menu_mate
+-- Table structure for menu_meta
 -- ----------------------------
-DROP TABLE IF EXISTS `menu_mate`;
-CREATE TABLE `menu_mate`  (
+DROP TABLE IF EXISTS `menu_meta`;
+CREATE TABLE `menu_meta`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单关键名',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',

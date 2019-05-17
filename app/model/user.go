@@ -56,10 +56,7 @@ func GetUserByPageLimt(page, limit int) ([]UserOut, int) {
 	if total < page*limit {
 		if total < limit {
 			page = 1
-		} else {
-
 		}
-
 	}
 	r, err := defDB.Table("user").Limit((page-1)*limit, (page-1)*limit+limit).Select()
 	if err != nil {

@@ -11,7 +11,7 @@
  Target Server Version : 50542
  File Encoding         : 65001
 
- Date: 16/05/2019 15:32:26
+ Date: 17/05/2019 16:54:16
 */
 
 SET NAMES utf8mb4;
@@ -25,11 +25,10 @@ CREATE TABLE `menu`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单路径',
   `component` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '页面模块',
-  `redirect` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'noredirect' COMMENT '重定向地址',
+  `redirect` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '重定向地址',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '唯一关键名',
   `hidden` tinyint(1) NULL DEFAULT 0 COMMENT '是否隐藏',
-  `alwaysshow` tinyint(1) NULL DEFAULT 1 COMMENT '是否常显示',
-  `enable` tinyint(1) NULL DEFAULT 1 COMMENT '是否有效',
+  `alwaysshow` tinyint(1) NULL DEFAULT 0 COMMENT '是否常显示',
   `sort` tinyint(2) NULL DEFAULT 0 COMMENT '排序',
   `parent_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父菜级关键名',
   PRIMARY KEY (`id`) USING BTREE,
