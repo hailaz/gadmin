@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/gogf/gf/g"
 	"github.com/gogf/gf/g/database/gdb"
 )
 
@@ -26,17 +27,34 @@ type MenuOut struct {
 	Children    []MenuOut   `json:"children"`
 }
 
-// GetMenuByUserName description
+// IsStringInSlice description
+//
+// createTime:2019年05月21日 15:50:15
+// author:hailaz
+func IsStringInSlice(str string, strs []string) bool {
+	for _, item := range strs {
+		if item == str {
+			return true
+		}
+	}
+	return false
+}
+
+// GetMenuByRoleName description
 //
 // createTime:2019年05月16日 17:19:53
 // author:hailaz
-func GetMenuByUserName(username string) []MenuOut {
+func GetMenuByRoleName(roles []string) []MenuOut {
 	menus := make([]MenuOut, 0)
-	if username == ADMIN_NAME {
+	if IsStringInSlice(ADMIN_NAME, roles) {
 		r, _ := defDB.Table("menu").All()
 		r.ToStructs(&menus)
 	} else {
-		r, _ := defDB.Table("menu m,menu_meta mm").Where("m.name=mm.menu_name").Fields("m.*,mm.title,mm.icon,mm.noCache").All()
+		roleSlice := make(g.Slice, 0)
+		for _, item := range roles {
+			roleSlice = append(roleSlice, item)
+		}
+		r, _ := defDB.Table("role_menu rm,menu m").Where("rm.menu_name=m.name AND rm.role_key IN (?)", roleSlice).Fields("m.*").All()
 		r.ToStructs(&menus)
 	}
 

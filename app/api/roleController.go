@@ -75,3 +75,11 @@ func (c *RoleController) SetRoleByUserName() {
 
 	Success(c.Request, "success")
 }
+
+func (c *RoleController) SetRoleMenus() {
+	data := c.Request.GetJson()
+	role := data.GetString("role")
+	menus := data.GetStrings("menus")
+	model.SetRoleMenus(role, menus)
+	Success(c.Request, "success")
+}

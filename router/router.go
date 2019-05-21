@@ -73,6 +73,7 @@ func InitV1(s *ghttp.Server) {
 		// 角色
 		{"REST", "/role", roleCtrl},
 		{"PUT", "/role/byuser", roleCtrl, "SetRoleByUserName"},
+		{"PUT", "/role/menu", roleCtrl, "SetRoleMenus"},
 		// 权限
 		{"REST", "/policy", policyCtrl},
 		{"GET", "/policy/byrole", policyCtrl, "GetPolicyByRole"},

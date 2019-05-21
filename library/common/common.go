@@ -10,7 +10,7 @@ func GetAction(act string) string {
 	acts := strings.Split(strings.Split(strings.Split(act, ";")[0], ":")[0], ",")
 	action := ""
 	for _, v := range acts {
-		if v == "All"||v == "REST" {
+		if v == "All" || v == "REST" {
 			return model.ACTION_ALL
 		}
 		if action == "" {

@@ -21,9 +21,24 @@ func (c *UserController) Info() {
 }
 
 func (c *UserController) Menu() {
+	rolename := c.Request.GetString("rolename")
+	if rolename != "" {
+		var list struct {
+			Menus     []model.MenuOut `json:"menus"`
+			RoleMenus []model.MenuOut `json:"role_menus"`
+		}
+		list.Menus = model.GetMenuByRoleName([]string{model.ADMIN_NAME})
+		list.RoleMenus = model.GetMenuByRoleName([]string{rolename})
+		Success(c.Request, list)
+	}
 	u := c.GetUser()
 	if u != nil {
-		Success(c.Request, model.GetMenuByUserName(u.UserName))
+		if u.UserName == model.ADMIN_NAME {
+			Success(c.Request, model.GetMenuByRoleName([]string{model.ADMIN_NAME}))
+		} else {
+			Success(c.Request, model.GetMenuByRoleName(model.Enforcer.GetRolesForUser(u.UserName)))
+		}
+
 	}
 	Fail(c.Request, code.RESPONSE_ERROR, "获取用户菜单失败")
 }

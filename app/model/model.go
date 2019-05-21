@@ -28,6 +28,7 @@ const (
 // author:hailaz
 func InitModel() {
 	defDB = g.DB()
+	//defDB.SetDebug(true)
 	initUser()
 	initCasbin()
 	initMenu()
