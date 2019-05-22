@@ -60,7 +60,7 @@ func initMenu() {
 		{
 			"name":        "user",
 			"menu_path":   "/user",
-			"component":   "layout/Layout",
+			"component":   "layout",
 			"redirect":    "/user/list",
 			"sort":        "0",
 			"parent_name": "",
