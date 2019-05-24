@@ -1,15 +1,17 @@
 swagger: '2.0'
 info:
-  version: 0.0.1
+  version: 0.0.2
   title: gadmin 接口文档
-  description: gadmin 接口文档
+  description: |
+    更新时间：2019年5月24日 16:23:58
 schemes:
   - http
 host: localhost:8199
-#basePath: /v1
-#
+basePath: /v1
+
+#请求路径
 paths:
-#登录相关
+##登录相关
   /loginkey:
     get:
       summary: 获取登录密码加密密钥
@@ -90,18 +92,18 @@ paths:
       responses:
         200:
           $ref: '#/responses/Login'
-#用户相关
-  /user/logout:
+  /logout:
     get:
       summary: 退出登录
       description: t
       tags:
-        - User
+        - Login
       security:
         - Authorization: []
       responses:
         200:
           $ref: '#/responses/Success'
+##用户相关
   /user/info:
     get:
       summary: 获取用户信息
@@ -138,7 +140,7 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/UserPost"
+            $ref: "#/parameters/UserPost"
       responses:
         200:
           $ref: '#/responses/Success'
@@ -153,7 +155,7 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/UserPut"
+            $ref: "#/parameters/UserPut"
       responses:
         200:
           $ref: '#/responses/Login'
@@ -176,7 +178,7 @@ paths:
       responses:
         200:
           $ref: '#/responses/Success'
-#角色相关
+##角色相关
   /role:
     get:
       summary: 获取角色列表
@@ -252,11 +254,27 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/UserRolePut"
+            $ref: "#/parameters/UserRolePut"
       responses:
         200:
           $ref: '#/responses/Success'
-#权限相关
+  /role/menu:
+    put:
+      summary: 修改角色菜单
+      description: 修改角色菜单
+      tags:
+        - Role
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/parameters/RoleMenuPut"
+      responses:
+        200:
+          $ref: '#/responses/Success'
+##权限相关
   /policy:
     get:
       summary: 获取用户列表
@@ -313,13 +331,78 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/RolePolicyPut"
+            $ref: "#/parameters/RolePolicyPut"
+      responses:
+        200:
+          $ref: '#/responses/Success'
+##菜单相关
+  /menu:
+    get:
+      summary: 获取菜单列表
+      description: 获取菜单列表
+      tags:
+        - Menu
+      security:
+        - Authorization: []
+      parameters:
+       - $ref: "#/parameters/page"
+       - $ref: "#/parameters/limit"
+      responses:
+        200:
+          $ref: '#/responses/MenuList'
+    post:
+      summary: 添加菜单
+      description: 添加菜单
+      tags:
+        - Menu
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/parameters/MenuPost"
+      responses:
+        200:
+          $ref: '#/responses/Success'
+    put:
+      summary: 修改菜单
+      description: 修改菜单
+      tags:
+        - Menu
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/parameters/MenuPut"
+      responses:
+        200:
+          $ref: '#/responses/Login'
+    delete:
+      summary: 删除菜单
+      description: 删除菜单
+      tags:
+        - Menu
+      security:
+        - Authorization: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            required:
+              - id
+            properties:
+              id:
+                type: integer
       responses:
         200:
           $ref: '#/responses/Success'
 
-
+#自定义结构
 definitions:
+#基础返回
   Result:
     properties:
       code:
@@ -334,11 +417,11 @@ definitions:
     allOf:
     - $ref: '#/definitions/Result'
     - type: object
-
   Error:
     allOf:
     - $ref: '#/definitions/Result'
     - type: object
+##User
   UserBase:
     properties:
       nick_name:
@@ -374,9 +457,83 @@ definitions:
           type: string
           format: date-time
           readOnly: true
+  Users:
+    type: array
+    items:
+      $ref: "#/definitions/User"
+##Role
+  Role:
+    properties:
+      name:
+        type: string
+      role:
+        type: string
+  Roles:
+    type: array
+    items:
+      $ref: "#/definitions/Role"
+##Policy
+  Policy:
+    properties:
+      name:
+        type: string
+      policy:
+        type: string
+  Policys:
+    type: array
+    items:
+      $ref: "#/definitions/Policy"
+##Menu
+  Meta:
+    properties:
+      noCache:
+        type: boolean
+      icon:
+        type: string
+      title:
+        type: string
+  Menu:
+    properties:
+      alwaysShow:
+        type: boolean
+      component:
+        type: string
+      hidden:
+        type: boolean
+      name:
+        type: string
+      parent_name:
+        type: string
+      path:
+        type: string
+      redirect:
+        type: string
+      sort:
+        type: integer
+      meta:
+        $ref: "#/definitions/Meta"
+      children:
+        $ref: "#/definitions/Menus"
+  Menus:
+    type: array
+    items:
+      $ref: "#/definitions/Menu"
+
+#请求参数
+parameters:
+  page:
+    name: page
+    in: query
+    description: Page number
+    type: integer
+  limit:
+    name: limit
+    in: query
+    description: limit
+    type: integer
   UserPost:
     allOf:
-    - $ref: '#/definitions/UserPut'
+    - $ref: '#/parameters/UserPut'
     - type: object
       properties:
         user_name:
@@ -394,10 +551,6 @@ definitions:
           description: 添加时必填，修改时选填。
           type: string
           format: password
-  Users:
-    type: array
-    items:
-      $ref: "#/definitions/User"
   UserRolePut:
     properties:
       roles:
@@ -406,17 +559,6 @@ definitions:
           type: string
       username:
         type: string
-#Role
-  Role:
-    properties:
-      name:
-        type: string
-      role:
-        type: string
-  Roles:
-    type: array
-    items:
-      $ref: "#/definitions/Role"
   RolePolicyPut:
     properties:
       policys:
@@ -425,29 +567,22 @@ definitions:
           type: string
       role:
         type: string
-#Policy
-  Policy:
+  RoleMenuPut:
     properties:
-      name:
+      menus:
+        type: array
+        items:
+          type: string
+      role:
         type: string
-      policy:
-        type: string
-  Policys:
-    type: array
-    items:
-      $ref: "#/definitions/Policy"
-
-parameters:
-  page:
-    name: page
-    in: query
-    description: Page number
-    type: integer
-  limit:
-    name: limit
-    in: query
-    description: limit
-    type: integer
+  MenuPost:
+    allOf:
+    - $ref: '#/definitions/Menu'
+    - type: object
+  MenuPut:
+    allOf:
+    - $ref: '#/definitions/Menu'
+    - type: object
 
 #响应
 responses:
@@ -459,6 +594,7 @@ responses:
     description: An unexpected error occured.
     schema:
       $ref: '#/definitions/Error'
+##Login
   LoginKey:
     allOf:
     - $ref: '#/definitions/Result'
@@ -487,6 +623,7 @@ responses:
               type: string
             token:
               type: string
+##User
   UserInfo:
     allOf:
     - $ref: '#/definitions/Result'
@@ -517,7 +654,7 @@ responses:
               type: integer
             items:
               $ref: "#/definitions/Users"
-
+##Role
   RoleList:
     allOf:
     - $ref: '#/definitions/Result'
@@ -546,6 +683,7 @@ responses:
               $ref: "#/definitions/Policys"
             role_policy_items:
               $ref: "#/definitions/Policys"
+##Policy
   PolicyList:
     allOf:
     - $ref: '#/definitions/Result'
@@ -558,8 +696,19 @@ responses:
               type: integer
             items:
               $ref: "#/definitions/Policys"
-
-
+##Menu
+  MenuList:
+    allOf:
+    - $ref: '#/definitions/Result'
+    - type: object
+      properties:
+        data:
+          type: object
+          properties:
+            total:
+              type: integer
+            items:
+              $ref: "#/definitions/Menus"
 
 #标签
 tags:
@@ -571,6 +720,8 @@ tags:
     description: 角色相关
   - name: Policy
     description: 权限相关
+  - name: Menu
+    description: 菜单相关
 
 #API鉴权
 securityDefinitions:
