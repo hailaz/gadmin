@@ -43,10 +43,6 @@ func (c *UserController) Menu() {
 	Fail(c.Request, code.RESPONSE_ERROR, "获取用户菜单失败")
 }
 
-func (c *UserController) Logout() {
-	Success(c.Request, "success")
-}
-
 func (c *UserController) Get() {
 	page := c.Request.GetInt("page", 1)
 	limit := c.Request.GetInt("limit", 10)

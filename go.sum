@@ -5,8 +5,8 @@ github.com/casbin/casbin v1.8.2/go.mod h1:z8uPsfBJGUsnkagrt3G8QvjgTKFMBJ32UP8HpZ
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/gogf/gf v1.6.2/go.mod h1:qboeF6kS9EQu2Z1IECeApNF0/N7Sw4wc0RUAwAfT6Mg=
-github.com/gogf/gf v1.6.13 h1:J2OOcnIJ1ltZ5aS8Hx6a972upRZi2lYGRsqqF5ry1qE=
-github.com/gogf/gf v1.6.13/go.mod h1:41x91y5T+itylJH0NsW/CfTD87qeBoPe/BX3DZAwP0U=
+github.com/gogf/gf v1.6.15 h1:WtAWdktGY6S6OIAzxoWeiLBGk9jNXVhm/cNbP1I8Qlw=
+github.com/gogf/gf v1.6.15/go.mod h1:41x91y5T+itylJH0NsW/CfTD87qeBoPe/BX3DZAwP0U=
 github.com/gogf/gf-jwt v1.0.5 h1:zNfnOeRSoT9p062R2DN5wkdT3BTw/K9jyf2f4axF73c=
 github.com/gogf/gf-jwt v1.0.5/go.mod h1:VlFL7YaPDbyFy96HNr0EDLGm9MyvscE3xLVEVpeyhiU=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=

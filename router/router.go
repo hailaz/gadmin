@@ -17,7 +17,7 @@ import (
 var routerMap = make(map[string]model.RolePolicy)
 
 func showURL(r *ghttp.Request) {
-	glog.Debug(r.Request.RequestURI)
+	glog.Debug("请求路径：", r.Method, r.Request.RequestURI)
 	//r.Response.CORSDefault()
 }
 
@@ -29,9 +29,6 @@ func InitRouter(s *ghttp.Server) {
 	initApiDocRouter(s)
 
 	s.BindHookHandler("/*", ghttp.HOOK_BEFORE_SERVE, showURL)
-	s.BindHandler("GET:/loginkey", api.GetLoginCryptoKey)                   //获取登录加密公钥
-	s.BindHandler("POST:/login", api.GfJWTMiddleware.LoginHandler)          //登录
-	s.BindHandler("GET:/refresh_token", api.GfJWTMiddleware.RefreshHandler) //刷新token
 	InitV1(s)
 
 	model.ReSetPolicy("system", routerMap)
@@ -43,6 +40,12 @@ func InitRouter(s *ghttp.Server) {
 // author:hailaz
 // authHook is the HOOK function implements JWT logistics.
 func authHook(r *ghttp.Request) {
+	switch r.Request.RequestURI { //登录相关免鉴权
+	case "/v1/loginkey":
+		return
+	case "/v1/login":
+		return
+	}
 	r.Response.CORSDefault() //开启跨域
 	//r.Response.Header().Set("Access-Control-Allow-Origin", "*")
 	api.GfJWTMiddleware.MiddlewareFunc()(r) //鉴权中间件
@@ -63,10 +66,14 @@ func InitV1(s *ghttp.Server) {
 
 	// user
 	BindGroup(s, "/v1", []ghttp.GroupItem{
+		//登录
+		{"GET", "/loginkey", api.GetLoginCryptoKey, "", "false"},                   //获取登录加密公钥
+		{"POST", "/login", api.GfJWTMiddleware.LoginHandler, "", "false"},          //登录
+		{"GET", "/refresh_token", api.GfJWTMiddleware.RefreshHandler, "", "false"}, //获取登录加密公钥
+		{"POST", "/logout", api.Logout, "", "false"},                               //登出
 		//menu
 		{"REST", "/menu", menuCtrl},
 		// 用户
-		{"POST", "/user/logout", userCtrl, "Logout", "false"},
 		{"GET", "/user/info", userCtrl, "Info", "false"},
 		{"GET", "/user/menu", userCtrl, "Menu", "false"},
 		{"REST", "/user", userCtrl},
