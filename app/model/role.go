@@ -146,11 +146,11 @@ func AddRole(role, name string) error {
 // author:hailaz
 func DeleteRole(role string) error {
 	p, err := GetRoleByRoleKey(role)
-	// 不存在插入新数据
 	if err != nil || p.Id == 0 {
 		return errors.New("delete fail")
 	}
 	Enforcer.DeleteRole(role)
+	DeleteRoleMenus(role)
 	i, _ := p.DeleteById(p.Id)
 	if i > 0 {
 		return nil
