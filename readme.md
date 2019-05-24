@@ -35,3 +35,4 @@ API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 或者启动项目后访问[http://localhost:8199/swagger](http://localhost:8199/swagger)显示接口文档。
 
 或将docfile目录下的swagger.yaml文件内容复制到[http://editor.swagger.io](http://editor.swagger.io)查看。
+
