@@ -1,6 +1,6 @@
 ### 简要说明
 
-Demo：[gadmin](http://gadmin.xiao3.top)
+Demo：[gadmin](http://home.xiao3.top:8199)
 
 后端使用框架：[GoFrame](https://github.com/gogf/gf)
 
