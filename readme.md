@@ -1,12 +1,8 @@
 ### 简要说明
 
-Demo：[gadmin](http://home.xiao3.top:8199)
+在线示例：[gadmin](http://home.xiao3.top:8199)
 
-后端使用框架：[GoFrame](https://github.com/gogf/gf)
-
-前端使用框架：[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
-前端项目地址：[https://github.com/hailaz/gadmin-vue](https://github.com/hailaz/gadmin-vue)
+对应的前端项目：[gadmin-vue](https://github.com/hailaz/gadmin-vue)
 
 ----
 
@@ -14,7 +10,7 @@ Demo：[gadmin](http://home.xiao3.top:8199)
 
 #### 后端
 
-框架：GoFrame
+框架：[GoFrame](https://github.com/gogf/gf)
 
 登录加密：RSA
 
@@ -24,7 +20,7 @@ API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
 ----
 #### 前端
-框架：vue-element-admin
+框架：[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
 ----
 ----
