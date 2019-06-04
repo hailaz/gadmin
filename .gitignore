@@ -10,5 +10,6 @@ docfile/tools/codeCreater/xorm/model/*
 
 debug
 .vscode/*
+.idea/*
 run.bat
 mod.bat

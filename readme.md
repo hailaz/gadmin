@@ -1,8 +1,11 @@
 ### 简要说明
 
+
 在线示例：[gadmin](http://home.xiao3.top:8199)
 
 对应的前端项目：[gadmin-vue](https://github.com/hailaz/gadmin-vue)
+
+![gadmin](/docfile/gadmin.png)
 
 ----
 
