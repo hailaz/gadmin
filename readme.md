@@ -1,5 +1,6 @@
 ### 简要说明
 
+基于GoFrame框架的前后端分离管理后台
 
 在线示例：[gadmin](http://home.xiao3.top:8199)
 
@@ -17,7 +18,7 @@
 
 登录加密：RSA
 
-权限管理：[Casbin](https://github.com/casbin/casbin)的RBAC
+权限管理：[Casbin](https://github.com/casbin/casbin)的RBAC-restful
 
 API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
