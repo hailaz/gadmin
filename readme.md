@@ -2,6 +2,8 @@
 
 基于GoFrame框架的前后端分离管理后台
 
+项目数据库结构在[docfile/sql](https://github.com/hailaz/gadmin/tree/master/docfile/sql)目录下
+
 在线示例：[gadmin](http://home.xiao3.top:8199)
 
 对应的前端项目：[gadmin-vue](https://github.com/hailaz/gadmin-vue)
