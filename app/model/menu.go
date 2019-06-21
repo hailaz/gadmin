@@ -23,6 +23,7 @@ type MenuOut struct {
 	Alwaysshow  bool        `json:"alwaysShow"`  //是否常显示
 	Sort        int         `json:"sort"`        //排序
 	ParentName  string      `json:"parent_name"` //父菜级关键名
+	AutoCreate  bool        `json:"auto_create"` //是否自动生成
 	MenuMetaOut MenuMetaOut `json:"meta"`
 	Children    []MenuOut   `json:"children"`
 }

@@ -143,7 +143,7 @@ func (c *UserController) Delete() {
 		Fail(c.Request, code.RESPONSE_ERROR, "无权限")
 	}
 	res, _ := u.DeleteById(id)
-	if res < 0 {
+	if res <= 0 {
 		Fail(c.Request, code.RESPONSE_ERROR)
 	}
 	model.Enforcer.DeleteRolesForUser(user.UserName)

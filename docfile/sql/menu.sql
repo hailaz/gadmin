@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : home.xiao3.top
  Source Server Type    : MySQL
- Source Server Version : 50542
- Source Host           : localhost:33061
+ Source Server Version : 50643
+ Source Host           : home.xiao3.top:3306
  Source Schema         : gadmin
 
  Target Server Type    : MySQL
- Target Server Version : 50542
+ Target Server Version : 50643
  File Encoding         : 65001
 
- Date: 17/05/2019 16:54:16
+ Date: 21/06/2019 14:12:48
 */
 
 SET NAMES utf8mb4;
@@ -31,8 +31,9 @@ CREATE TABLE `menu`  (
   `alwaysshow` tinyint(1) NULL DEFAULT 0 COMMENT '是否常显示',
   `sort` tinyint(2) NULL DEFAULT 0 COMMENT '排序',
   `parent_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父菜级关键名',
+  `auto_create` tinyint(1) NULL DEFAULT 0 COMMENT '是否自动生成',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `key_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;

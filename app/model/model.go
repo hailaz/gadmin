@@ -64,6 +64,7 @@ func initMenu() {
 			"redirect":    "/user/list",
 			"sort":        "0",
 			"parent_name": "",
+			"auto_create": true,
 			"meta": gdb.Map{
 				"title":   "user",
 				"icon":    "user",
@@ -75,6 +76,7 @@ func initMenu() {
 			"component":   "user/user",
 			"sort":        "0",
 			"parent_name": "user",
+			"auto_create": true,
 			"meta": gdb.Map{
 				"title":   "userList",
 				"icon":    "",
@@ -86,6 +88,7 @@ func initMenu() {
 			"component":   "user/role",
 			"sort":        "1",
 			"parent_name": "user",
+			"auto_create": true,
 			"meta": gdb.Map{
 				"title":   "roleList",
 				"icon":    "",
@@ -97,6 +100,7 @@ func initMenu() {
 			"component":   "user/policy",
 			"sort":        "2",
 			"parent_name": "user",
+			"auto_create": true,
 			"meta": gdb.Map{
 				"title":   "policyList",
 				"icon":    "",
@@ -108,6 +112,7 @@ func initMenu() {
 			"component":   "user/menu",
 			"sort":        "3",
 			"parent_name": "user",
+			"auto_create": true,
 			"meta": gdb.Map{
 				"title":   "menuList",
 				"icon":    "",

@@ -80,8 +80,11 @@ func (c *MenuController) Delete() {
 	if err != nil {
 		Fail(c.Request, code.RESPONSE_ERROR, err.Error())
 	}
+	if m.AutoCreate {
+		Fail(c.Request, code.RESPONSE_ERROR)
+	}
 	res, _ := m.DeleteById(m.Id)
-	if res < 0 {
+	if res <= 0 {
 		Fail(c.Request, code.RESPONSE_ERROR)
 	}
 	Success(c.Request, "Delete")
