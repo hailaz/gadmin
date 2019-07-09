@@ -8,7 +8,10 @@
 
 对应的前端项目：[gadmin-vue](https://github.com/hailaz/gadmin-vue)
 
+自述：第一次设计，整体结构可能有些问题，望见谅，要是能给我个建议什么的就更好了。暂时也没想到增加什么功能，有需要可以提个issues，看看我能不能做。
+
 ![gadmin](/docfile/gadmin.png)
+
 
 ----
 
