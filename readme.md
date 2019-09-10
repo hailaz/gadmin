@@ -44,7 +44,7 @@ API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
 
 
-<img src="1.jpg" width="145" height="126" alt="Planets" usemap="#planetmap">
+<img src="https://github.com/hailaz/gadmin/blob/master/docfile/gadmin.png" alt="Planets" usemap="#planetmap">
 
 <map name="planetmap">
   <area shape="rect" coords="0,0,82,126" href="http://www.baidu.com" alt="baidu">
