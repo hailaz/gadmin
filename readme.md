@@ -44,10 +44,9 @@ API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 
 
 
-<img src="https://github.com/hailaz/gadmin/blob/master/docfile/gadmin.png" alt="Planets" usemap="#planetmap">
 
-<map name="planetmap">
-  <area shape="rect" coords="0,0,82,126" href="http://www.baidu.com" alt="baidu">
-  <area shape="circle" coords="90,58,3" href="mercur.htm" alt="Mercury">
-  <area shape="circle" coords="124,58,8" href="venus.htm" alt="Venus">
-</map>
+
+<p style="position: relative;">
+    <img src="https://github.com/hailaz/gadmin/blob/master/docfile/gadmin.png" alt="Planets">
+  <a style="position: absolute; top: 10%; left: 10%; width: 30%; height: 15%" href="https://stackoverflow.com/questions/46153754/using-an-image-map-in-a-github-readme-md-file"></a>
+</p>
