@@ -42,11 +42,3 @@ API授权方式：JWT，使用[gf-jwt](https://github.com/gogf/gf-jwt)
 或将docfile目录下的swagger.yaml文件内容复制到[http://editor.swagger.io](http://editor.swagger.io)查看。
 
 
-
-
-
-
-<p style="position: relative;">
-    <img src="https://github.com/hailaz/gadmin/blob/master/docfile/gadmin.png" alt="Planets">
-  <a style="position: absolute; top: 10%; left: 10%; width: 30%; height: 15%" href="https://stackoverflow.com/questions/46153754/using-an-image-map-in-a-github-readme-md-file"></a>
-</p>
