@@ -1,12 +1,16 @@
 ### 简要说明
 
-基于GoFrame框架的前后端分离管理后台
+基于GoFrame框架的前后端分离管理后台，项目首次启动会自动插入管理员用户。
+
+用户名：admin
+
+密码：123456
 
 项目数据库结构在[docfile/sql](https://github.com/hailaz/gadmin/tree/master/docfile/sql)目录下
 
-在线示例：[gadmin](http://home.xiao3.top:8199)
-
 对应的前端项目：[gadmin-vue](https://github.com/hailaz/gadmin-vue)
+
+
 
 自述：第一次设计，整体结构可能有些问题，望见谅，要是能给我个建议什么的就更好了。暂时也没想到增加什么功能，有需要可以提个issues，看看我能不能做。
 

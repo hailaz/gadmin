@@ -17,9 +17,9 @@ const (
 	ACTION_PUT             = "(PUT)"
 	ACTION_DELETE          = "(DELETE)"
 	ACTION_ALL             = "(GET)|(POST)|(PUT)|(DELETE)|(PATCH)|(OPTIONS)|(HEAD)"
-	ADMIN_NAME             = "admin" //超级管理员用户名
-	ADMIN_NICK_NAME        = "超级管理员" //超级管理员显示名称
-	ADMIN_DEFAULT_PASSWORD = "123"   //超级管理员默认密码
+	ADMIN_NAME             = "admin"  //超级管理员用户名
+	ADMIN_NICK_NAME        = "超级管理员"  //超级管理员显示名称
+	ADMIN_DEFAULT_PASSWORD = "123456" //超级管理员默认密码
 )
 
 // InitModel 初始化数据模型
