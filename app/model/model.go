@@ -40,7 +40,7 @@ func InitModel() {
 // author:hailaz
 func initUser() {
 	u, err := GetUserByName(ADMIN_NAME)
-	if err != nil || u.Id != 0 {
+	if err == nil && u != nil && u.Id != 0 {
 		return
 	}
 	admin := User{
