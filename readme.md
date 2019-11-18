@@ -1,6 +1,9 @@
-### 当前项目短期不更新了，也可以参考以下项目，也是基于GF的
+### 当前项目短期不更新了，也可以参考以下项目，其他人开发的管理后台，也是基于GF
 
-gmanager: 基于gf框架的管理平台，支持登录、认证、组织机构、用户、角色、菜单、日志 https://gitee.com/goflyfox/gmanager
+gmanager: 基于gf框架的管理平台，支持登录、认证、组织机构、用户、角色、菜单、日志 
+https://gitee.com/goflyfox/gmanager
+
+
 
 ### 简要说明
 
