@@ -56,6 +56,7 @@ func (c *UserController) Get() {
 func (c *UserController) Post() {
 	data, _ := c.Request.GetJson()
 	username := data.GetString("user_name")
+
 	nickname := data.GetString("nick_name")
 	email := data.GetString("email")
 	password := data.GetString("password")
@@ -63,7 +64,7 @@ func (c *UserController) Post() {
 	phone := data.GetString("phone")
 
 	u, err := model.GetUserByName(username)
-	if err != nil || u.Id != 0 {
+	if u != nil || err == nil {
 		Fail(c.Request, code.RESPONSE_ERROR, "用户已存在")
 	}
 	if password == "" {
