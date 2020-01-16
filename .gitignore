@@ -13,3 +13,4 @@ debug
 .idea/*
 run.bat
 mod.bat
+config/config.toml
