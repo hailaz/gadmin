@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/gogf/gf/g/database/gdb"
+	"github.com/gogf/gf/database/gdb"
 )
 
 // DeleteRoleMenus description

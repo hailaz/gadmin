@@ -2,8 +2,8 @@ package api
 
 import (
 	jwt "github.com/gogf/gf-jwt"
-	"github.com/gogf/gf/g/frame/gmvc"
-	"github.com/gogf/gf/g/net/ghttp"
+	"github.com/gogf/gf/frame/gmvc"
+	"github.com/gogf/gf/net/ghttp"
 	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/code"
 )

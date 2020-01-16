@@ -1,9 +1,9 @@
 package api
 
 import (
-	"github.com/gogf/gf/g/database/gdb"
+	"github.com/gogf/gf/database/gdb"
 
-	"github.com/gogf/gf/g/os/glog"
+	"github.com/gogf/gf/os/glog"
 	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/code"
 )
@@ -54,7 +54,7 @@ func (c *UserController) Get() {
 	Success(c.Request, userList)
 }
 func (c *UserController) Post() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	username := data.GetString("user_name")
 	nickname := data.GetString("nick_name")
 	email := data.GetString("email")
@@ -88,7 +88,7 @@ func (c *UserController) Post() {
 	Fail(c.Request, code.RESPONSE_ERROR)
 }
 func (c *UserController) Put() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	username := data.GetString("user_name")
 	nickname := data.GetString("nick_name")
 	email := data.GetString("email")
@@ -129,7 +129,7 @@ func (c *UserController) Put() {
 	Success(c.Request, "success")
 }
 func (c *UserController) Delete() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	id := data.GetInt64("id")
 	if id < 1 {
 		Fail(c.Request, code.RESPONSE_ERROR)

@@ -1,8 +1,8 @@
 package model
 
 import (
-	"github.com/gogf/gf/g"
-	"github.com/gogf/gf/g/database/gdb"
+	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/database/gdb"
 )
 
 type MenuMetaOut struct {

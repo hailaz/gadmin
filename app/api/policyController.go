@@ -35,7 +35,7 @@ func (c *PolicyController) Post() {
 }
 
 func (c *PolicyController) Put() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	name := data.GetString("name")
 	path := data.GetString("policy")
 	if name == UNDEFIND_POLICY_NAME {
@@ -68,7 +68,7 @@ func (c *PolicyController) GetPolicyByRole() {
 }
 
 func (c *PolicyController) SetPolicyByRole() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	role := data.GetString("role")
 	policys := data.GetStrings("policys")
 

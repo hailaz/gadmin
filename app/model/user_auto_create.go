@@ -3,7 +3,7 @@ package model
 import (
 	"errors"
 
-	"github.com/gogf/gf/g/os/gtime"
+	"github.com/gogf/gf/os/gtime"
 )
 
 // User 表名：user

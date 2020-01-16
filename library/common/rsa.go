@@ -8,9 +8,9 @@ import (
 	"encoding/pem"
 	"errors"
 
-	"github.com/gogf/gf/g/container/gmap"
-	"github.com/gogf/gf/g/os/glog"
-	"github.com/gogf/gf/g/os/gtime"
+	"github.com/gogf/gf/container/gmap"
+	"github.com/gogf/gf/os/glog"
+	"github.com/gogf/gf/os/gtime"
 )
 
 var CryptoKeyList = gmap.New()
@@ -55,7 +55,7 @@ func RemoveTimeoutCryptoKey() {
 	//移除超时的加密key
 	for _, v := range kList {
 		CryptoKeyList.Remove(v)
-		glog.Debugfln("remove key:%v", v)
+		glog.Debugf("remove key:%v", v)
 	}
 }
 

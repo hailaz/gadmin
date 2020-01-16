@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/gogf/gf/g/os/glog"
+	"github.com/gogf/gf/os/glog"
 	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/code"
 )
@@ -28,7 +28,7 @@ func (c *RoleController) Get() {
 }
 
 func (c *RoleController) Post() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	name := data.GetString("name")
 	role := data.GetString("role")
 
@@ -41,7 +41,7 @@ func (c *RoleController) Post() {
 }
 
 func (c *RoleController) Put() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	name := data.GetString("name")
 	role := data.GetString("role")
 	glog.Debug(name, role)
@@ -57,7 +57,7 @@ func (c *RoleController) Put() {
 }
 
 func (c *RoleController) Delete() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	role := data.GetString("role")
 
 	err := model.DeleteRole(role)
@@ -68,7 +68,7 @@ func (c *RoleController) Delete() {
 }
 
 func (c *RoleController) SetRoleByUserName() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	roles := data.GetStrings("roles")
 	username := data.GetString("username")
 	model.SetRoleByUserName(username, roles)
@@ -77,7 +77,7 @@ func (c *RoleController) SetRoleByUserName() {
 }
 
 func (c *RoleController) SetRoleMenus() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	role := data.GetString("role")
 	menus := data.GetStrings("menus")
 	model.SetRoleMenus(role, menus)

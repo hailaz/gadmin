@@ -3,7 +3,7 @@ package timer
 import (
 	"time"
 
-	"github.com/gogf/gf/g/os/gtimer"
+	"github.com/gogf/gf/os/gtimer"
 	"github.com/hailaz/gadmin/library/common"
 )
 

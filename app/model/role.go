@@ -3,8 +3,8 @@ package model
 import (
 	"errors"
 
-	"github.com/gogf/gf/g/database/gdb"
-	"github.com/gogf/gf/g/os/glog"
+	"github.com/gogf/gf/database/gdb"
+	"github.com/gogf/gf/os/glog"
 )
 
 type Role struct {

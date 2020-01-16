@@ -5,10 +5,10 @@ import (
 	"time"
 
 	jwt "github.com/gogf/gf-jwt"
-	"github.com/gogf/gf/g"
-	"github.com/gogf/gf/g/net/ghttp"
-	"github.com/gogf/gf/g/os/glog"
-	"github.com/gogf/gf/g/os/gtime"
+	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/net/ghttp"
+	"github.com/gogf/gf/os/glog"
+	"github.com/gogf/gf/os/gtime"
 	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/common"
 )
@@ -52,7 +52,7 @@ func init() {
 func GetLoginCryptoKey(r *ghttp.Request) {
 	kid := r.Session.Id()
 	ck := common.GenCryptoKey(kid)
-	//glog.Debug("kid:" + kid)
+	// glog.Debug("kid:" + kid)
 	Success(r, ck)
 }
 
@@ -74,7 +74,7 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 func Authorizator(data interface{}, r *ghttp.Request) bool {
 	method := r.Method
 	path := r.URL.Path
-	//glog.Debugfln("user:%v ,method:%v ,path:%v", data, method, path)
+	//glog.Debugf("user:%v ,method:%v ,path:%v", data, method, path)
 	return model.Enforcer.Enforce(data, path, method)
 }
 
@@ -125,7 +125,7 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 // createTime:2019年05月13日 10:00:22
 // author:hailaz
 func Authenticator(r *ghttp.Request) (interface{}, error) {
-	data := r.GetJson()
+	data, _ := r.GetJson()
 	name := data.GetString("username")
 	pwd := data.GetString("password")
 	kid := data.GetString("kid")
@@ -134,9 +134,9 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 		if gtime.Second()-ck.TimeStamp >= 5 { //加密key超时时间
 			return nil, jwt.ErrFailedAuthentication
 		}
-		//glog.Debugfln("%v", ck.Id)
-		//glog.Debugfln("%v", ck.Key)
-		//glog.Debugfln("%v %v", name, pwd)
+		//glog.Debugf("%v", ck.Id)
+		//glog.Debugf("%v", ck.Key)
+		//glog.Debugf("%v %v", name, pwd)
 		decodePwd, err := base64.StdEncoding.DecodeString(pwd)
 		if err != nil {
 			return nil, err
@@ -144,7 +144,7 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 		decryptPwd, _ := common.RsaDecrypt(decodePwd, []byte(ck.PrivateKey))
 		//glog.Debug(string(decryptPwd))
 		password := string(decryptPwd)
-		//glog.Debugfln("%v %v", name, password)
+		//glog.Debugf("%v %v", name, password)
 		if password != "" {
 			u, err := model.GetUserByName(name)
 			if err != nil {

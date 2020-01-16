@@ -3,9 +3,9 @@ package model
 import (
 	"errors"
 
-	"github.com/gogf/gf/g/crypto/gmd5"
-	"github.com/gogf/gf/g/database/gdb"
-	"github.com/gogf/gf/g/os/gtime"
+	"github.com/gogf/gf/crypto/gmd5"
+	"github.com/gogf/gf/database/gdb"
+	"github.com/gogf/gf/os/gtime"
 )
 
 const (
@@ -93,7 +93,8 @@ func GetUserByName(name string) (*User, error) {
 // createTime:2019年04月25日 10:19:13
 // author:hailaz
 func EncryptPassword(data string) string {
-	return gmd5.EncryptString(data + ENCRYPTMD5)
+	md5Str, _ := gmd5.EncryptString(data + ENCRYPTMD5)
+	return md5Str
 }
 
 // UpdateUserById 更新用户

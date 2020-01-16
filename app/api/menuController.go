@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/gogf/gf/g/database/gdb"
+	"github.com/gogf/gf/database/gdb"
 	"github.com/hailaz/gadmin/app/model"
 	"github.com/hailaz/gadmin/library/code"
 )
@@ -23,7 +23,7 @@ func (c *MenuController) Get() {
 }
 
 func (c *MenuController) Post() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	m := model.MenuOut{}
 	data.ToStruct(&m)
 	model.InsertMenuWithMeta(gdb.List{
@@ -47,7 +47,7 @@ func (c *MenuController) Post() {
 }
 
 func (c *MenuController) Put() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	m := model.MenuOut{}
 	data.ToStruct(&m)
 	err := model.UpdateMenuByName(
@@ -74,7 +74,7 @@ func (c *MenuController) Put() {
 }
 
 func (c *MenuController) Delete() {
-	data := c.Request.GetJson()
+	data, _ := c.Request.GetJson()
 	name := data.GetString("name")
 	m, err := model.GetMenuByName(name)
 	if err != nil {

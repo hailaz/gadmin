@@ -8,7 +8,7 @@ import (
 {{end}}
 {{range .Tables}}
 {{if (PKIsId .)}}"errors"{{end}}
-"github.com/gogf/gf/g/os/gtime"
+"github.com/gogf/gf/os/gtime"
 )
 // {{Mapper .Name}} 表名：{{.Name}}
 // 由数据库自动生成的结构体

@@ -6,7 +6,7 @@ import (
 
 	"github.com/casbin/casbin/model"
 	"github.com/casbin/casbin/persist"
-	"github.com/gogf/gf/g/database/gdb"
+	"github.com/gogf/gf/database/gdb"
 )
 
 type CasbinRule struct {
