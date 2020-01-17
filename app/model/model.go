@@ -2,10 +2,10 @@ package model
 
 import (
 	"github.com/casbin/casbin"
-	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/database/gdb"
-	_ "github.com/lib/pq"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/gogf/gf/frame/g"
+	// _ "github.com/lib/pq"
+	// _ "github.com/mattn/go-sqlite3"
 )
 
 var defDB gdb.DB
