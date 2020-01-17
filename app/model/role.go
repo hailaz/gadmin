@@ -59,7 +59,7 @@ func GetRoleList(page, limit int, defaultname string) ([]Role, int) {
 // createTime:2019年05月08日 15:08:19
 // author:hailaz
 func GetRoleByUserName(userName string) []Role {
-	roles := Enforcer.GetRolesForUser(userName)
+	roles, _ := Enforcer.GetRolesForUser(userName)
 	roleList := make([]Role, 0)
 	for _, item := range roles {
 		p := Role{Role: item}

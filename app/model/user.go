@@ -129,7 +129,7 @@ func (u *User) GetUserInfo() UserInfo {
 	if u.UserName == ADMIN_NAME {
 		info.Roles = []string{ADMIN_NAME}
 	} else {
-		info.Roles = Enforcer.GetRolesForUser(u.UserName)
+		info.Roles, _ = Enforcer.GetRolesForUser(u.UserName)
 	}
 
 	info.Avatar = u.Avatar

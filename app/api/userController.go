@@ -36,7 +36,8 @@ func (c *UserController) Menu() {
 		if u.UserName == model.ADMIN_NAME {
 			Success(c.Request, model.GetMenuByRoleName([]string{model.ADMIN_NAME}))
 		} else {
-			Success(c.Request, model.GetMenuByRoleName(model.Enforcer.GetRolesForUser(u.UserName)))
+			roles, _ := model.Enforcer.GetRolesForUser(u.UserName)
+			Success(c.Request, model.GetMenuByRoleName(roles))
 		}
 
 	}
