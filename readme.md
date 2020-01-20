@@ -1,25 +1,23 @@
-### 当前项目短期不更新了，也可以参考以下项目，其他人开发的管理后台，也是基于GF
-
-gmanager: 基于gf框架的管理平台，支持登录、认证、组织机构、用户、角色、菜单、日志 
-https://gitee.com/goflyfox/gmanager
-
+#### 项目不定期更新
 
 
 ### 简要说明
 
 基于GoFrame框架的前后端分离管理后台，项目首次启动会自动插入管理员用户。
 
-用户名：admin
+#### 使用方式
 
-密码：123456
+1. 准备数据库，数据结构在[docfile/sql](https://github.com/hailaz/gadmin/tree/master/docfile/sql)目录下，all.sql是全部结构。
+2. 修改配置文件config/default.toml，也可指定其它配置文件 -c=xxx.toml
+3. 启动编译后的二进制文件
+4. 访问[http://localhost:8199](http://localhost:8199)
+    用户名：admin
+    密码：123456
 
-项目数据库结构在[docfile/sql](https://github.com/hailaz/gadmin/tree/master/docfile/sql)目录下
+**当前项目已包含构建后的前端文件。** 未构建的前端项目地址：[gadmin-vue](https://github.com/hailaz/gadmin-vue)
 
-对应的前端项目：[gadmin-vue](https://github.com/hailaz/gadmin-vue)
-
-
-
-自述：第一次设计，整体结构可能有些问题，望见谅，要是能给我个建议什么的就更好了。暂时也没想到增加什么功能，有需要可以提个issues，看看我能不能做。
+#### 自述
+第一次设计，整体结构可能有些问题，望见谅，要是能给我个建议什么的就更好了。有bug可以提个issues。
 
 ![gadmin](/docfile/gadmin.png)
 
